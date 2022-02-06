@@ -211,15 +211,17 @@ object Utils : Libraries {
 
 object UnitTest : Libraries {
     private object Versions {
-        const val junit = "4.13.1"
+        const val junit = "4.13.2"
         const val mockito = "4.0.0"
+        const val mockk= "1.12.2"
         const val hamcrest = "1.3"
-        const val roboelectric = "4.6"
+        const val roboelectric = "4.7.3"
     }
 
     const val junit = "junit:junit:${Versions.junit}"
     const val roomTest = "androidx.room:room-testing:${Database.Versions.room}"
     const val mockitoCore = "org.mockito:mockito-core:${Versions.mockito}"
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
     const val hamcrest = "org.hamcrest:hamcrest-all:${Versions.hamcrest}"
     const val roboelectric = "org.robolectric:robolectric:${Versions.roboelectric}"
 
