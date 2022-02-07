@@ -45,7 +45,8 @@ class RepositoryGetEpisodesTest : RepositoryTest() {
     repository.getEpisodes(page = 1)
 
     // THEN
-    coVerify (exactly = 1) { database.queryAllEpisodesByPage(page = any(), pageSize = any()) }
+    coVerify(exactly = 0) { api.fetchEpisodes(page = 1) }
+    coVerify(exactly = 1) { database.queryAllEpisodesByPage(page = any(), pageSize = any()) }
   }
 
   private fun stubApiFetchEpisodes(episodes: ApiEpisodes) {
