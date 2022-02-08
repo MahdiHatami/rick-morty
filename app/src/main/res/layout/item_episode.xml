@@ -1,52 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="episode"
-            type="com.metis.rickmorty.ui.episode.ViewEpisodeItem" />
-    </data>
+  <data>
 
-    <androidx.cardview.widget.CardView
+    <variable
+        name="episode"
+        type="com.metis.rickmorty.ui.episode.ViewEpisodeItem" />
+  </data>
+
+  <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="8dp"
+      android:onClick="@{() -> episode.onClick()}">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:onClick="@{() -> episode.onClick()}">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="8dp">
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintTop_toBottomOf="@id/name"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:paddingStart="8dp"
+          android:paddingEnd="8dp"
+          android:text="@{episode.episode}"
+          android:textAppearance="@style/textAppearanceListItemText"
+          tools:text="S01E01" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@{episode.episode}"
-                android:textAppearance="@style/textAppearanceListItemText"
-                tools:text="S01E01" />
+      <TextView
+          android:id="@+id/name"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/air_date"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="8dp"
+          android:text="@{episode.name}"
+          android:textAppearance="@style/textAppearanceListItemTitle"
+          tools:text="Pilot" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@{episode.name}"
-                android:textAppearance="@style/textAppearanceListItemTitle"
-                tools:text="Pilot" />
+      <TextView
+          android:id="@+id/air_date"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingStart="8dp"
+          android:paddingEnd="8dp"
+          android:text="@{episode.airDate}"
+          android:textAppearance="@style/textAppearanceListItemSmall"
+          tools:text="December 2, 2013" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@{episode.airDate}"
-                android:textAppearance="@style/textAppearanceListItemSmall"
-                tools:text="December 2, 2013" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+  </androidx.cardview.widget.CardView>
 </layout>
