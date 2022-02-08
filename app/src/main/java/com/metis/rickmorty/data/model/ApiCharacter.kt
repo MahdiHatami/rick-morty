@@ -1,13 +1,11 @@
-package com.metis.rickandmorty.data.api.model
+package com.metis.rickmorty.data.model
 
 import com.google.gson.annotations.SerializedName
-import com.metis.rickmorty.data.model.ApiLocation
-import com.metis.rickmorty.data.model.ApiOrigin
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ApiCharacter(
+data class ApiCharacter(
 
     @SerializedName(value = "id")
     val id: Int,

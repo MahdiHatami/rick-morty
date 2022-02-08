@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ApiLocation(
+data class ApiLocation(
 
     @SerialName(value = "name")
     val name: String,
