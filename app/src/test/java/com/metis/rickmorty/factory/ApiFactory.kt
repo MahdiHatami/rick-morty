@@ -1,6 +1,6 @@
 package com.metis.rickmorty.factory
 
-import com.metis.rickandmorty.data.api.model.ApiCharacter
+import com.metis.rickmorty.data.model.ApiCharacter
 import com.metis.rickmorty.data.model.ApiEpisode
 import com.metis.rickmorty.data.model.ApiEpisodes
 import com.metis.rickmorty.data.model.ApiInfo
