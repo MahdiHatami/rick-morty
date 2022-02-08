@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.metis.rickmorty.data.source.local.entity.DbEpisode
 
 @Dao
-interface DbEpisodeDao {
+interface EpisodeDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertEpisode(vararg entityEpisode: DbEpisode)

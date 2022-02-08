@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity(tableName = "origins")
-internal data class DbOrigin(
+data class DbOrigin(
 
     @PrimaryKey
     @ColumnInfo(name = "name")

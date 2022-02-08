@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity(tableName = "characters")
-internal data class DbCharacter(
+data class DbCharacter(
 
     @PrimaryKey
     @ColumnInfo(name = "_id")

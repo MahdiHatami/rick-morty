@@ -4,7 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.metis.rickmorty.data.source.local.converters.DbTypeConverters
-import com.metis.rickmorty.data.source.local.dao.DbEpisodeDao
+import com.metis.rickmorty.data.source.local.dao.CharacterDao
+import com.metis.rickmorty.data.source.local.dao.EpisodeDao
 import com.metis.rickmorty.data.source.local.entity.DbCharacter
 import com.metis.rickmorty.data.source.local.entity.DbEpisode
 
@@ -13,5 +14,6 @@ import com.metis.rickmorty.data.source.local.entity.DbEpisode
 @TypeConverters(DbTypeConverters::class)
 abstract class RMDatabase : RoomDatabase() {
 
-  abstract val episodeDao: DbEpisodeDao
+  abstract val episodeDao: EpisodeDao
+  abstract val characterDao: CharacterDao
 }

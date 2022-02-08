@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity(tableName = "locations")
-internal data class DbLocation(
+data class DbLocation(
 
     @PrimaryKey
     @ColumnInfo(name = "name")
