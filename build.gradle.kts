@@ -17,7 +17,6 @@ buildscript {
 }
 
 plugins {
-  id("org.jlleitschuh.gradle.ktlint") version ("10.2.1")
   id("org.jetbrains.kotlin.android") version "1.6.10" apply false
 }
 
@@ -27,7 +26,6 @@ allprojects {
     mavenCentral()
     maven(url = "https://jitpack.io")
   }
-  apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }
 
 tasks.register("clean").configure {
