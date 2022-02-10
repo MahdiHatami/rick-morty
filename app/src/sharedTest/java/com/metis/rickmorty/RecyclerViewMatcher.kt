@@ -8,7 +8,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 
 class RecyclerViewMatcher(recyclerViewId: Int) {
-  private val recyclerViewId: Int
+  private val recyclerViewId: Int = recyclerViewId
   fun atPosition(position: Int): Matcher<View?>? {
     return atPositionOnView(position, -1)
   }
@@ -51,10 +51,6 @@ class RecyclerViewMatcher(recyclerViewId: Int) {
         }
       }
     }
-  }
-
-  init {
-    this.recyclerViewId = recyclerViewId
   }
 }
 
