@@ -8,7 +8,6 @@ plugins {
   kotlin("plugin.serialization") version "1.5.31"
   id("kotlin-parcelize")
   id("androidx.navigation.safeargs.kotlin")
-  id("com.google.firebase.crashlytics")
   id("dagger.hilt.android.plugin")
 }
 
@@ -183,11 +182,6 @@ dependencies {
   // Chuck
   debugImplementation(Network.chuck)
   releaseImplementation(Network.chuckNoOp)
-
-  // Firebase BoM, Crashlytics, Analytics
-  implementation(platform(Firebase.firebaseBom))
-  implementation(Firebase.crashlytics)
-  implementation(Firebase.analytics)
 
   // AndroidX Test - JVM testing
   testImplementation(AndroidX.testExt)
