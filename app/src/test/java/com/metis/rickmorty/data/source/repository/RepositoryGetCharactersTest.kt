@@ -1,0 +1,71 @@
+package com.metis.rickmorty.data.source.repository
+
+import com.metis.rickmorty.data.model.ApiCharacter
+import com.metis.rickmorty.data.model.ApiResult
+import com.metis.rickmorty.data.source.local.entity.DbCharacter
+import com.metis.rickmorty.factory.ApiFactory
+import com.metis.rickmorty.factory.CharacterDataFactory
+import com.metis.rickmorty.factory.DataFactory
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.just
+import io.mockk.runs
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Test
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class RepositoryGetCharactersTest : RepositoryTest() {
+
+  @Test
+  fun `getCharacters call api and db when device isOnline`() = runBlockingTest {
+    // GIVEN
+    val characterIds: List<Int> = DataFactory.randomIntList(count = 5)
+    stubStatusProviderIsOnline(true)
+    stubApiFetchCharacters(ApiFactory.Characters.makeCharacters())
+    val entityCharacters = CharacterDataFactory.makeDbCharacters(5)
+    stubCharacterDaoQueryAllCharacterByIds(entityCharacters)
+    stubDbInsertCharacters()
+
+    // WHEN
+    repository.getCharactersByIds(characterIds = characterIds)
+
+    // THEN
+    coVerify(exactly = 1) { api.fetchCharactersByIds(ids = any()) }
+    coVerify(exactly = 1) { database.insertCharacter(entityCharacter = any()) }
+    coVerify(exactly = 1) { database.queryCharacterByIds(ids = any()) }
+  }
+
+  @Test
+  fun `getCharacters call on db when device isOffline`() = runBlockingTest {
+    // GIVEN
+    val characterIds: List<Int> = DataFactory.randomIntList(count = 5)
+    stubStatusProviderIsOnline(false)
+    stubApiFetchCharacters(ApiFactory.Characters.makeCharacters())
+    val entityCharacters = CharacterDataFactory.makeDbCharacters(5)
+    stubCharacterDaoQueryAllCharacterByIds(entityCharacters)
+    stubDbInsertCharacters()
+
+    // WHEN
+    repository.getCharactersByIds(characterIds = characterIds)
+
+    // THEN
+    coVerify(exactly = 0) { api.fetchCharactersByIds(ids = any()) }
+    coVerify(exactly = 1) { database.queryCharacterByIds(ids = any()) }
+  }
+
+
+  private fun stubCharacterDaoQueryAllCharacterByIds(entityCharacters: List<DbCharacter>) {
+    coEvery {
+      database.queryCharacterByIds(ids = any())
+    } returns entityCharacters
+  }
+
+  private fun stubApiFetchCharacters(characters: List<ApiCharacter>) {
+    coEvery { api.fetchCharactersByIds(any()) } returns ApiResult.Success(characters)
+  }
+
+  private fun stubDbInsertCharacters() {
+    coEvery { database.insertCharacter(any()) } just runs
+  }
+}
