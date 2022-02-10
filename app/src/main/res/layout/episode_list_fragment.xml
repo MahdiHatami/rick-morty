@@ -18,7 +18,7 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         isRefreshing="@{viewModel.loadingState}"
-        onRefreshListener="@{viewModel.loadEpisodes}"
+        onRefreshListener="@{viewModel::loadEpisodes}"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
