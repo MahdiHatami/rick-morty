@@ -15,8 +15,4 @@ data class ModelCharacter(
     val url: String,
     val created: String,
     val isKilledByUser: Boolean,
-) {
-
-    val isAliveAndNotKilledByUser: Boolean
-        get() = isAlive && !isKilledByUser
-}
+)

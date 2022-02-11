@@ -7,6 +7,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.metis.rickmorty.R
+import com.metis.rickmorty.ui.character.CharacterListAdapter
+import com.metis.rickmorty.ui.character.ViewCharacterItem
 import com.metis.rickmorty.ui.episode.EpisodeListAdapter
 import com.metis.rickmorty.ui.episode.ViewEpisodeItem
 import com.metis.rickmorty.utils.LoadingState
@@ -53,21 +55,21 @@ private fun RecyclerView.getOrCreateEpisodeListAdapter(): EpisodeListAdapter {
     }
 }
 
-// @BindingAdapter("characters")
-// fun RecyclerView.setCharacters(itemViewModels: List<ViewCharacterItem>?) {
-//     val adapter = getOrCreateCharacterListAdapter()
-//     adapter.setCharacters(itemViewModels ?: emptyList())
-// }
-//
-// private fun RecyclerView.getOrCreateCharacterListAdapter(): CharacterListAdapter {
-//     return if (adapter != null && adapter is CharacterListAdapter) {
-//         adapter as CharacterListAdapter
-//     } else {
-//         val newAdapter = CharacterListAdapter()
-//         adapter = newAdapter
-//         newAdapter
-//     }
-// }
+@BindingAdapter("characters")
+fun RecyclerView.setCharacters(itemViewModels: List<ViewCharacterItem>?) {
+    val adapter = getOrCreateCharacterListAdapter()
+    adapter.setCharacters(itemViewModels ?: emptyList())
+}
+
+private fun RecyclerView.getOrCreateCharacterListAdapter(): CharacterListAdapter {
+    return if (adapter != null && adapter is CharacterListAdapter) {
+        adapter as CharacterListAdapter
+    } else {
+        val newAdapter = CharacterListAdapter()
+        adapter = newAdapter
+        newAdapter
+    }
+}
 
 @BindingAdapter("imageUrl")
 fun ImageView.setImageUrl(imageUrl: String?) {
