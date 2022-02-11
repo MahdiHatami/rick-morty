@@ -52,7 +52,7 @@
           android:paddingEnd="8dp"
           android:text="@{episode.airDate}"
           android:textAppearance="@style/textAppearanceListItemSmall"
-          tools:text="December 2, 2013" />
+          tools:text="December 2, 2015" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

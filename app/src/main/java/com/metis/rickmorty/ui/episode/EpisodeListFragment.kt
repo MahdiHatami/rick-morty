@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.metis.rickmorty.R
@@ -67,7 +68,6 @@ class EpisodeListFragment : BaseFragment() {
       }
     }
 
-
     lifecycle.launchWhileResumed {
       viewModel.selectedEpisodeCharacterIds.collectLatest { characterIds ->
         onEpisodeRowClick(characterIds)
@@ -76,9 +76,9 @@ class EpisodeListFragment : BaseFragment() {
   }
 
   private fun onEpisodeRowClick(characterIds: IntArray) {
-    // val action = EpisodeListFragmentDirections
-    //   .actionEpisodeListFragmentToCharacterListFragment(characterIds)
-    // view?.findNavController()?.navigate(action)
+    val action = EpisodeListFragmentDirections
+      .actionEpisodeListFragmentToCharacterListFragment(characterIds)
+    view?.findNavController()?.navigate(action)
   }
 
   private fun showErrorMessage() {

@@ -3,4 +3,6 @@
   <string name="offline_app">No network connections</string>
   <string name="error_message">Something went wrong!</string>
   <string name="home_dashboard">Episode List</string>
+  <string name="no_offline_data">There is no offline data to show</string>
+  <string name="character_image">character image</string>
 </resources>

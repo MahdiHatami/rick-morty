@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.metis.rickmorty.ViewModelFactory
 import com.metis.rickmorty.di.key.ViewModelKey
-import com.metis.rickmorty.ui.episode.EpisodeListFragment
+import com.metis.rickmorty.ui.character.CharacterListViewModel
+import com.metis.rickmorty.ui.characterDetail.CharacterDetailsViewModel
 import com.metis.rickmorty.ui.episode.EpisodeListViewModel
 import dagger.Binds
 import dagger.Module
@@ -23,4 +24,14 @@ abstract class ViewModelModule {
   @Binds
   @ViewModelKey(EpisodeListViewModel::class)
   abstract fun bindEpisodeListViewModel(viewModel: EpisodeListViewModel): ViewModel
+
+  @IntoMap
+  @Binds
+  @ViewModelKey(CharacterListViewModel::class)
+  abstract fun bindCharacterListViewModel(viewModel: CharacterListViewModel): ViewModel
+
+  @IntoMap
+  @Binds
+  @ViewModelKey(CharacterDetailsViewModel::class)
+  abstract fun bindCharacterDetailsViewModel(viewModel: CharacterDetailsViewModel): ViewModel
 }
