@@ -9,7 +9,7 @@ import com.metis.rickmorty.data.source.local.dao.EpisodeDao
 import com.metis.rickmorty.data.source.local.entity.DbCharacter
 import com.metis.rickmorty.data.source.local.entity.DbEpisode
 
-@Database(entities = [DbEpisode::class, DbCharacter::class], version = 1, exportSchema = true)
+@Database(entities = [DbEpisode::class, DbCharacter::class], version = 2, exportSchema = true)
 
 @TypeConverters(DbTypeConverters::class)
 abstract class RMDatabase : RoomDatabase() {

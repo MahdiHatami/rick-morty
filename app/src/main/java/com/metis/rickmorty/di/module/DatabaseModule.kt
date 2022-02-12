@@ -21,7 +21,9 @@ class DatabaseModule {
     return Room.databaseBuilder(
       context,
       RMDatabase::class.java, "YRM.db"
-    ).build()
+    )
+      .fallbackToDestructiveMigration()
+      .build()
   }
 
   @Singleton

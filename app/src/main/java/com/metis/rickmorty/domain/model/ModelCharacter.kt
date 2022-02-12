@@ -11,7 +11,6 @@ data class ModelCharacter(
     val origin: ModelOrigin,
     val location: ModelLocation,
     val imageUrl: String,
-    val episodeIds: List<Int>,
     val url: String,
     val created: String,
     val isKilledByUser: Boolean,
