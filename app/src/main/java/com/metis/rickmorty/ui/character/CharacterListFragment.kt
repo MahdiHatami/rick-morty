@@ -1,19 +1,15 @@
 package com.metis.rickmorty.ui.character
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.metis.rickmorty.R
 import com.metis.rickmorty.databinding.CharacterListFragmentBinding
 import com.metis.rickmorty.ui.BaseFragment
-import com.metis.rickmorty.ui.episode.EpisodeListViewModel
 import com.metis.rickmorty.ui.util.launchWhileResumed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -40,6 +36,8 @@ class CharacterListFragment : BaseFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
+    viewModel.loadCharacters(args.characterIds.toList())
 
     lifecycle.launchWhileResumed {
       viewModel.onError.collectLatest {

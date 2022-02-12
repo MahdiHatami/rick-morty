@@ -2,7 +2,6 @@ package com.metis.rickmorty.ui.character
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LoadState
 import com.metis.rickmorty.data.source.repository.Repository
 import com.metis.rickmorty.domain.model.ModelCharacter
 import com.metis.rickmorty.domain.model.QueryResult
@@ -19,7 +18,7 @@ import javax.inject.Inject
 
 class CharacterListViewModel @Inject constructor(
   private val repository: Repository,
-  private val statusProvider: StatusProvider
+  private val statusProvider: StatusProvider,
 ) : ViewModel() {
 
   private val _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.None)
@@ -41,28 +40,25 @@ class CharacterListViewModel @Inject constructor(
   val selectedCharacterId: Flow<Int> = _selectedCharacterId.receiveAsFlow()
 
   private val _characterIds: MutableStateFlow<List<Int>> = MutableStateFlow(emptyList())
-  val characterIds : StateFlow<List<Int>> = _characterIds
+  val characterIds: StateFlow<List<Int>> = _characterIds
 
-  init {
-    loadCharacters()
-  }
-
-  private fun loadCharacters() {
+  fun loadCharacters(characterIds: List<Int>) {
     _loadingState.value = LoadingState.Loading
     _onError.value = false
     _isOffline.value = false
-    getCharacters()
+    getCharacters(characterIds)
   }
 
-  private fun getCharacters() {
+  private fun getCharacters(characterIds: List<Int>) {
     if (!statusProvider.isOnline()) _isOffline.value = true
 
     viewModelScope.launch {
-      when (val result = repository.getCharactersByIds(characterIds.value)) {
+      when (val result = repository.getCharactersByIds(characterIds)) {
         is QueryResult.Successful -> _characters.value = result.data.toViewCharacterItems()
         QueryResult.NoCache -> _isNoCache.value = true
         QueryResult.Error -> _onError.value = true
       }
+      _loadingState.value = LoadingState.None
     }
   }
 
