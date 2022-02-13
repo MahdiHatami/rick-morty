@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.metis.rickmorty.R
 import com.metis.rickmorty.databinding.CharacterListFragmentBinding
@@ -64,22 +65,9 @@ class CharacterListFragment : BaseFragment() {
     }
   }
 
-  private fun showErrorMessage() {
-    Toast.makeText(context, R.string.error_message, Toast.LENGTH_LONG).show()
-  }
-
-  private fun showOfflineMessage() {
-    Toast.makeText(context, R.string.offline_app, Toast.LENGTH_LONG).show()
-  }
-
-  private fun onNoOfflineData() {
-    Toast.makeText(context, R.string.no_offline_data, Toast.LENGTH_LONG).show()
-    activity?.onBackPressed()
-  }
-
-  fun onCharacterRowClick(characterId: Int) {
-    // val action = CharacterListFragmentDirections
-    //   .actionCharacterListFragmentToCharacterDetails(characterId)
-    // view?.findNavController()?.navigate(action)
+  private fun onCharacterRowClick(characterId: Int) {
+    val action = CharacterListFragmentDirections
+      .actionCharacterListFragmentToCharacterDetails(characterId)
+    view?.findNavController()?.navigate(action)
   }
 }

@@ -81,14 +81,6 @@ class EpisodeListFragment : BaseFragment() {
     view?.findNavController()?.navigate(action)
   }
 
-  private fun showErrorMessage() {
-    Toast.makeText(context, R.string.error_message, Toast.LENGTH_LONG).show()
-  }
-
-  private fun showOfflineMessage() {
-    Toast.makeText(context, R.string.offline_app, Toast.LENGTH_SHORT).show()
-  }
-
   private fun reachedEndOfList() {
     binding.episodeListProgress.visibility = View.GONE
   }
@@ -96,6 +88,5 @@ class EpisodeListFragment : BaseFragment() {
   override fun onDestroyView() {
     super.onDestroyView()
     endlessScrollListener = null
-    // binding = null // why
   }
 }
