@@ -12,4 +12,6 @@ interface LocalDataSource {
   suspend fun insertCharacter(entityCharacter: DbCharacter)
 
   suspend fun queryCharacterByIds(ids: List<Int>): List<DbCharacter>
+
+  suspend fun queryCharacterById(id: Int): DbCharacter?
 }

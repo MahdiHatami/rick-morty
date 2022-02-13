@@ -34,4 +34,9 @@ class LocalDataSourceImpl @Inject constructor(
     withContext(ioDispatcher) {
       characterDao.queryCharactersByIds(characterIds)
     }
+
+  override suspend fun queryCharacterById(id: Int): DbCharacter? =
+    withContext(ioDispatcher) {
+      characterDao.queryCharacter(id)
+    }
 }

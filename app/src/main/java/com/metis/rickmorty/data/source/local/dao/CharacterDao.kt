@@ -13,4 +13,7 @@ interface CharacterDao {
 
   @Query(value = "SELECT * FROM characters WHERE _id IN (:characterIds)")
   suspend fun queryCharactersByIds(characterIds: List<Int>): List<DbCharacter>
+
+  @Query(value = "SELECT * FROM characters WHERE _id = :characterId LIMIT 1")
+  suspend fun queryCharacter(characterId: Int): DbCharacter?
 }
