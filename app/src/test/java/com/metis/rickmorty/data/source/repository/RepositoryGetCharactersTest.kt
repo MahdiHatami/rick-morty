@@ -54,11 +54,31 @@ class RepositoryGetCharactersTest : RepositoryTest() {
     coVerify(exactly = 1) { database.queryCharacterByIds(ids = any()) }
   }
 
+  @Test
+  fun `getCharacter details call on db`() = runBlockingTest {
+    // GIVEN
+    val entityCharacter = CharacterDataFactory.makeDbCharacter(1)
+    stubCharacterDaoQueryCharacterDetailsById(entityCharacter)
+
+    // WHEN
+    repository.getCharacterDetails(characterId = 1)
+
+    // THEN
+    coVerify(exactly = 0) { api.fetchCharacterDetails(id = any()) }
+    coVerify(exactly = 1) { database.queryCharacterById(id = any()) }
+
+  }
 
   private fun stubCharacterDaoQueryAllCharacterByIds(entityCharacters: List<DbCharacter>) {
     coEvery {
       database.queryCharacterByIds(ids = any())
     } returns entityCharacters
+  }
+
+  private fun stubCharacterDaoQueryCharacterDetailsById(entityCharacter: DbCharacter) {
+    coEvery {
+      database.queryCharacterById(id = any())
+    } returns entityCharacter
   }
 
   private fun stubApiFetchCharacters(characters: List<ApiCharacter>) {

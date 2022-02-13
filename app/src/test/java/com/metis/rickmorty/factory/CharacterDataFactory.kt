@@ -21,7 +21,6 @@ object CharacterDataFactory {
       origin = OriginDataFactory.makeDbOrigin(),
       location = LocationDataFactory.makeDbLocation(),
       image = DataFactory.randomString(),
-      episodeIds = DataFactory.randomIntList(count = 5),
       url = DataFactory.randomString(),
       created = DataFactory.randomString(),
       isKilledByUser = isKilledByUser,
