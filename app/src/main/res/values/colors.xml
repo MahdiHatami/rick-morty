@@ -8,4 +8,9 @@
 
   <color name="whiteColor">#FFFFFF</color>
   <color name="blackColor">#000000</color>
+
+  <color name="transparentGray">#E6555555</color>
+
+  <color name="characterDetailsNameBackground">@color/transparentGray</color>
+
 </resources>

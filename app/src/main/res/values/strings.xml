@@ -5,4 +5,10 @@
   <string name="home_dashboard">Episode List</string>
   <string name="no_offline_data">There is no offline data to show</string>
   <string name="character_image">character image</string>
+  <string name="character_origin">Origin</string>
+  <string name="character_last_location">Last Location</string>
+  <string name="character_gender">Gender</string>
+  <string name="character_species">Species</string>
+  <string name="character_details_format">id: %1$d - created: %2$s</string>
+
 </resources>
