@@ -20,4 +20,9 @@ class RemoteDataSourceImpl @Inject constructor(
     toApiResult {
       api.fetchCharactersByIds(ids)
     }
+
+  override suspend fun fetchCharacterDetails(id: Int): ApiResult<ApiCharacter> =
+    toApiResult {
+      api.fetchCharacterDetails(id)
+    }
 }

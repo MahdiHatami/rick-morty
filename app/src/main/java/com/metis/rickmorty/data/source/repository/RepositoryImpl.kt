@@ -40,6 +40,16 @@ class RepositoryImpl @Inject constructor(
     return queryDbCharacters(characterIds)
   }
 
+  override suspend fun getCharacterDetails(characterId: Int): QueryResult<ModelCharacter?> {
+    return queryDbCharacterById(characterId)
+  }
+
+  private suspend fun queryDbCharacterById(characterId: Int): QueryResult<ModelCharacter?>{
+    val entity = db.queryCharacterById(characterId)
+    val modelCharacter = entity?.toModelCharacter()
+    return QueryResult.Successful(modelCharacter)
+  }
+
   private suspend fun queryDbCharacters(characterIds: List<Int>): QueryResult<List<ModelCharacter>> {
     val entityList = db.queryCharacterByIds(characterIds)
     val modelCharacters = entityList.map(DbCharacter::toModelCharacter)

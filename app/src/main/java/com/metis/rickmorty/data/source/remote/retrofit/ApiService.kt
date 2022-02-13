@@ -15,6 +15,8 @@ interface ApiService {
 
     private const val PARAM_KEY_PAGE: String = "page"
     private const val PATH_KEY_CHARACTER_IDS: String = "characterIds"
+    private const val PATH_KEY_CHARACTER_ID: String = "characterId"
+
   }
 
   /**
@@ -34,4 +36,10 @@ interface ApiService {
     @Path(value = PATH_KEY_CHARACTER_IDS)
     characterIds: String,
   ): Response<List<ApiCharacter>>
+
+  @GET(value = "$CHARACTER_ENDPOINT{$PATH_KEY_CHARACTER_ID}")
+  suspend fun fetchCharacterDetails(
+    @Path(value = PATH_KEY_CHARACTER_ID)
+    characterId: Int,
+  ): Response<ApiCharacter>
 }
