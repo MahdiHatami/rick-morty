@@ -31,9 +31,10 @@
       android:id="@+id/characterDetails"
       android:name="com.metis.rickmorty.ui.characterDetail.CharacterDetailsFragment"
       android:label="character_details_fragment"
-      tools:layout="@layout/character_details_fragment" />
-  <argument
-      android:name="characterId"
-      app:argType="integer" />
+      tools:layout="@layout/character_details_fragment">
+    <argument
+        android:name="characterId"
+        app:argType="integer" />
+  </fragment>
 
 </navigation>
