@@ -1,7 +1,5 @@
 import org.gradle.api.JavaVersion
 
-
-
 object Config {
   const val minSdkVersion = 26
   const val compileSdkVersion = 30
@@ -14,7 +12,6 @@ object Config {
   const val applicationId = "com.metis.rickmorty"
   const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
-
 
 /**Helps handle group of libraries**/
 interface Libraries {
@@ -37,7 +34,6 @@ object Plugins {
     "androidx.navigation:navigation-safe-args-gradle-plugin:${Navigation.Versions.navigation}"
 }
 
-
 object Kotlin {
 
   object Versions {
@@ -56,7 +52,6 @@ object Kotlin {
   const val kotlinxSerialization =
     "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxJson}"
 }
-
 
 object AndroidX : Libraries {
   private object Versions {
@@ -94,11 +89,9 @@ object AndroidX : Libraries {
   const val testRules = "androidx.test:rules:${Versions.testRules}"
   const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragment}"
 
-
   override val components: List<String>
     get() = listOf(coreKtx, viewModel, appCompat, lifeCycleCommon, liveData, preferences)
 }
-
 
 object Dagger : Libraries {
 
@@ -130,11 +123,9 @@ object Network : Libraries {
   const val okhttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
   const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
-
   override val components: List<String>
     get() = listOf(retrofit, okhttp, okhttpInterceptor, gson)
 }
-
 
 object Database : Libraries {
 
@@ -150,7 +141,6 @@ object Database : Libraries {
     get() = listOf(roomRuntime, roomKtx)
 }
 
-
 object Navigation : Libraries {
 
   object Versions {
@@ -165,7 +155,6 @@ object Navigation : Libraries {
     get() = listOf(navigationFragment, navigationUi)
 }
 
-
 object View : Libraries {
 
   private object Versions {
@@ -174,7 +163,6 @@ object View : Libraries {
     const val constraintLayout = "2.0.4"
     const val swipeRefresh = "1.1.0"
     const val viewPager = "1.0.0"
-
   }
 
   const val material = "com.google.android.material:material:${Versions.material}"
@@ -191,6 +179,27 @@ object View : Libraries {
   )
 }
 
+object Compose : Libraries {
+  private object Versions {
+    const val activity = "1.3.1"
+    const val material = "1.0.5"
+    const val animation = "1.0.5"
+    const val tooling = "1.0.5"
+    const val viewModel = "1.0.0-alpha07"
+    const val junit = "1.0.5"
+  }
+
+  const val activity = "androidx.activity:activity-compose:${Versions.activity}"
+  const val material = "androidx.compose.material:material:${Versions.material}";
+  const val animation = "androidx.compose.animation:animation:${Versions.animation}"
+  const val tooling = "androidx.compose.ui:ui-tooling:${Versions.tooling}"
+  const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.viewModel}"
+  const val junit = "androidx.compose.ui:ui-test-junit4:${Versions.junit}"
+
+  override val components = listOf(
+    activity, material, animation, tooling, viewModel, junit
+  )
+}
 
 object Utils : Libraries {
 
@@ -208,12 +217,11 @@ object Utils : Libraries {
     get() = listOf(timber, glide)
 }
 
-
 object UnitTest : Libraries {
   private object Versions {
     const val junit = "4.13.2"
     const val mockito = "4.0.0"
-    const val mockk= "1.12.2"
+    const val mockk = "1.12.2"
     const val hamcrest = "1.3"
     const val roboelectric = "4.7.3"
   }
@@ -228,7 +236,6 @@ object UnitTest : Libraries {
   override val components: List<String>
     get() = listOf(junit)
 }
-
 
 object AndroidTest : Libraries {
   private object Versions {
@@ -245,7 +252,6 @@ object AndroidTest : Libraries {
   override val components: List<String>
     get() = listOf(espresso, junitExt)
 }
-
 
 object Firebase {
 
