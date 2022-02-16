@@ -138,8 +138,10 @@ dependencies {
   implementation(Compose.material)
   implementation(Compose.animation)
   implementation(Compose.tooling)
-  implementation(Compose.viewModel)
-  testImplementation(Compose.junit)
+  implementation(Compose.appCompat)
+
+  debugImplementation("androidx.compose.ui:ui-tooling:1.0.5")
+  implementation("androidx.compose.ui:ui-tooling-preview:1.0.5")
 
   // Room
   implementation(Database.roomRuntime)

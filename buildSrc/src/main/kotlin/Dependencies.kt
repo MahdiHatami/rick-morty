@@ -37,7 +37,7 @@ object Plugins {
 object Kotlin {
 
   object Versions {
-    const val kotlin = "1.6.10"
+    const val kotlin = "1.5.31"
     const val coroutines = "1.4.2"
     const val kotlinxJson = "1.3.2"
   }
@@ -185,11 +185,13 @@ object Compose : Libraries {
     const val material = "1.0.5"
     const val animation = "1.0.5"
     const val tooling = "1.0.5"
+    const val appCompat = "1.3.0"
     const val viewModel = "1.0.0-alpha07"
     const val junit = "1.0.5"
   }
 
   const val activity = "androidx.activity:activity-compose:${Versions.activity}"
+  const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
   const val material = "androidx.compose.material:material:${Versions.material}";
   const val animation = "androidx.compose.animation:animation:${Versions.animation}"
   const val tooling = "androidx.compose.ui:ui-tooling:${Versions.tooling}"
