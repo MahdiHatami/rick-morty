@@ -33,7 +33,7 @@ class EpisodeListViewModel @Inject constructor(
     loadEpisodes()
   }
 
-  private fun loadEpisodes() {
+  fun loadEpisodes() {
     _uiState.value = EpisodeListUiState()
     page = 1
     getEpisodes()

@@ -143,6 +143,8 @@ dependencies {
   debugImplementation("androidx.compose.ui:ui-tooling:1.0.5")
   implementation("androidx.compose.ui:ui-tooling-preview:1.0.5")
 
+  implementation("com.google.accompanist:accompanist-swiperefresh:0.15.0")
+
   // Room
   implementation(Database.roomRuntime)
   implementation("androidx.legacy:legacy-support-v4:1.0.0")

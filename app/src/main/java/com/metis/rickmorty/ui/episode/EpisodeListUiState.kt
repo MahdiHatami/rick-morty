@@ -5,6 +5,7 @@ data class EpisodeListUiState(
   val loadingMore: Boolean = false,
   val isOffline: Boolean = false,
   val isEndOfList: Boolean = false,
+  val isRefreshing: Boolean = false,
   val onError: Boolean = false,
   val episodes: List<ViewEpisodeItem> = emptyList()
 )
