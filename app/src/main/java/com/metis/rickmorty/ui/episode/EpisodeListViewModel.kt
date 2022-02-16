@@ -12,6 +12,8 @@ import com.metis.rickmorty.ui.mapper.toViewEpisodeItem
 import com.metis.rickmorty.utils.StatusProvider
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,8 +23,8 @@ class EpisodeListViewModel @Inject constructor(
   private val statusProvider: StatusProvider
 ) : ViewModel() {
 
-  private val _uiState: MutableState<EpisodeListUiState> = mutableStateOf(EpisodeListUiState())
-  val uiState: State<EpisodeListUiState> = _uiState
+  private val _uiState: MutableStateFlow<EpisodeListUiState> = MutableStateFlow(EpisodeListUiState())
+  val uiState: StateFlow<EpisodeListUiState> = _uiState
 
   private val _selectedEpisodeCharacterIds: Channel<IntArray> = Channel()
   val selectedEpisodeCharacterIds: Flow<IntArray> = _selectedEpisodeCharacterIds.receiveAsFlow()
