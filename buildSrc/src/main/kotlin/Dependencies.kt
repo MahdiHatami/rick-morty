@@ -188,6 +188,7 @@ object Compose : Libraries {
     const val appCompat = "1.3.0"
     const val viewModel = "1.0.0-alpha07"
     const val junit = "1.0.5"
+    const val paging = "1.0.0-alpha14"
   }
 
   const val activity = "androidx.activity:activity-compose:${Versions.activity}"
@@ -197,6 +198,7 @@ object Compose : Libraries {
   const val tooling = "androidx.compose.ui:ui-tooling:${Versions.tooling}"
   const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.viewModel}"
   const val junit = "androidx.compose.ui:ui-test-junit4:${Versions.junit}"
+  const val paging = "androidx.paging:paging-compose:${Versions.paging}"
 
   override val components = listOf(
     activity, material, animation, tooling, viewModel, junit
