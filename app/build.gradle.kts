@@ -181,12 +181,6 @@ dependencies {
   implementation(AndroidX.liveData)
   implementation(AndroidX.lifeCycleCommon)
 
-  // Paging Library
-  implementation(AndroidX.paging)
-
-  // WorkManager
-  implementation(AndroidX.workManager)
-
   // Dagger-Hilt
   implementation(Dagger.daggerHilt)
   kapt(Dagger.hiltCompiler)

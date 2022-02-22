@@ -188,7 +188,7 @@ object Compose : Libraries {
     const val appCompat = "1.3.0"
     const val viewModel = "1.0.0-alpha07"
     const val junit = "1.0.5"
-    const val paging = "1.0.0-alpha14"
+    const val paging = "1.0.0-alpha10"
   }
 
   const val activity = "androidx.activity:activity-compose:${Versions.activity}"
