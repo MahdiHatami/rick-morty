@@ -3,15 +3,16 @@ package com.metis.rickmorty.data.source.repository
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.metis.rickmorty.MainCoroutineRule
 import com.metis.rickmorty.data.source.local.LocalDataSource
-import com.metis.rickmorty.data.source.local.RMDatabase
 import com.metis.rickmorty.data.source.remote.RemoteDataSource
 import com.metis.rickmorty.utils.StatusProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 
+@OptIn(ExperimentalCoroutinesApi::class)
 open class RepositoryTest {
 
   @MockK
@@ -41,7 +42,7 @@ open class RepositoryTest {
       api = api,
       db = database,
       statusProvider = internetStatus,
-      dispatcher = coroutineRule.testDispatcher
+      ioDispatcher = coroutineRule.testDispatcher
     )
   }
 
