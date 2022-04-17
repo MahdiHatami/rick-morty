@@ -25,12 +25,6 @@ android {
 
     buildConfigField("String", "BASE_URL", "\"https://rickandmortyapi.com/api/\"")
 
-    kapt {
-      arguments {
-        arg("room.schemaLocation", "$projectDir/schemas")
-      }
-      correctErrorTypes = true
-    }
   }
   buildTypes {
     getByName("release") {
@@ -58,10 +52,6 @@ android {
       getByName("test").java.srcDir("src/sharedTest/java")
       getByName("androidTest").java.srcDir("src/sharedTest/java")
     }
-  }
-
-  hilt {
-    enableAggregatingTask = true
   }
 
   buildFeatures {
@@ -153,7 +143,6 @@ dependencies {
 
   // AndroidX Test - JVM testing
   testImplementation(AndroidX.testExt)
-  testImplementation(AndroidX.coreKtxTest)
   testImplementation(AndroidX.archCoreTesting)
   testImplementation(UnitTest.junit)
   testImplementation(UnitTest.roboelectric)
@@ -163,16 +152,9 @@ dependencies {
 
   // AndroidX Test - Instrumented testing
   androidTestImplementation(UnitTest.mockk)
-  androidTestImplementation(AndroidX.testExt)
   androidTestImplementation(AndroidTest.espresso)
   androidTestImplementation(AndroidTest.espressoContrib)
   androidTestImplementation(AndroidTest.espressoIntent)
   androidTestImplementation(AndroidX.archCoreTesting)
-  androidTestImplementation(AndroidX.coreKtxTest)
-  androidTestImplementation(AndroidX.testRules)
   androidTestImplementation(Kotlin.coroutineTest)
-
-  // Until the bug at https://issuetracker.google.com/128612536 is fixed
-  debugImplementation(AndroidX.fragmentTesting)
-  implementation(AndroidTest.idlingResource)
 }

@@ -52,10 +52,8 @@ object AndroidX : Libraries {
     const val appCompat = "1.2.0"
     const val lifeCycle = "2.3.0-alpha03"
     const val preferences = "1.1.1"
-    const val fragment = "1.3.0-alpha06"
 
     const val archCoreTesting = "2.1.0"
-    const val coreKtxTest = "1.3.0"
     const val testExt = "1.1.2"
     const val testRules = "1.3.0"
   }
@@ -70,10 +68,7 @@ object AndroidX : Libraries {
   const val preferences = "androidx.preference:preference-ktx:${Versions.preferences}"
 
   const val archCoreTesting = "androidx.arch.core:core-testing:${Versions.archCoreTesting}"
-  const val coreKtxTest = "androidx.test:core-ktx:${Versions.coreKtxTest}"
   const val testExt = "androidx.test.ext:junit-ktx:${Versions.testExt}"
-  const val testRules = "androidx.test:rules:${Versions.testRules}"
-  const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragment}"
 
   override val components: List<String>
     get() = listOf(coreKtx, viewModel, appCompat, lifeCycleCommon, liveData, preferences)
@@ -206,7 +201,6 @@ object AndroidTest : Libraries {
   const val junitExt = "androidx.test.ext:junit:${Versions.junitExt}"
   const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
   const val espressoIntent = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
-  const val idlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.espresso}"
 
   override val components: List<String>
     get() = listOf(espresso, junitExt)
