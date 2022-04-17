@@ -24,6 +24,11 @@ class LocalDataSourceImpl @Inject constructor(
       episodeDao.queryAllEpisodesByPage(page, pageSize)
     }
 
+  override suspend fun queryAllEpisodes(): List<DbEpisode> =
+    withContext(ioDispatcher) {
+      episodeDao.queryAllEpisodes()
+    }
+
   override suspend fun insertCharacter(entityCharacter: DbCharacter) = withContext(ioDispatcher) {
     withContext(ioDispatcher) {
       characterDao.insertCharacter(entityCharacter)

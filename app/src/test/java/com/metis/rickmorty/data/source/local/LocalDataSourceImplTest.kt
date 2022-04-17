@@ -6,16 +6,15 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.metis.rickmorty.MainCoroutineRule
 import com.metis.rickmorty.factory.CharacterDataFactory
+import com.metis.rickmorty.factory.DataFactory
 import com.metis.rickmorty.factory.EpisodeDataFactory
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
-import org.hamcrest.core.IsEqual
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -64,7 +63,7 @@ class LocalDataSourceImplTest {
 
   @Test
   @Throws(Exception::class)
-  fun insertEpisode() = runBlockingTest {
+  fun `insertEpisode should persisted to db`() = runBlockingTest {
     val episode = EpisodeDataFactory.makeDbEpisode()
 
     localDataSource.insertEpisode(episode)
@@ -74,7 +73,7 @@ class LocalDataSourceImplTest {
   }
 
   @Test
-  fun queryAllEpisodesByPage() = runBlockingTest {
+  fun `query all episodes by page should return the same size per page`() = runBlockingTest {
     // GIVEN
     val episodeList = EpisodeDataFactory.makeDbEpisodes(2)
     episodeList.forEach {
@@ -89,7 +88,7 @@ class LocalDataSourceImplTest {
   }
 
   @Test
-  fun insertCharacter() = runBlockingTest {
+  fun `insert character should be persisted in db`() = runBlockingTest {
     // GIVEN
     val character = CharacterDataFactory.makeDbCharacter()
     localDataSource.insertCharacter(character)
@@ -102,7 +101,7 @@ class LocalDataSourceImplTest {
   }
 
   @Test
-  fun queryCharacterByIds() = runBlockingTest {
+  fun `query all characters should return the same objects`() = runBlockingTest {
     // GIVEN
     val characters = CharacterDataFactory.makeDbCharacters(2)
     characters.forEach {
@@ -118,7 +117,7 @@ class LocalDataSourceImplTest {
   }
 
   @Test
-  fun queryCharacterById() = runBlockingTest {
+  fun `querying character by id should return exact character`() = runBlockingTest {
     // GIVEN
     val character = CharacterDataFactory.makeDbCharacter()
     localDataSource.insertCharacter(character)
@@ -129,5 +128,23 @@ class LocalDataSourceImplTest {
     // THEN
     assertThat(dbCharacter, notNullValue())
     assertThat(dbCharacter?.id, equalTo(character.id))
+  }
+
+  @Test
+  fun `insert episode with same id should return the updated episode`() = runBlockingTest {
+    // GIVEN
+    val episodeId = DataFactory.randomInt()
+    val oldEpisode = EpisodeDataFactory.makeDbEpisode(episodeId)
+    val updatedEpisode = EpisodeDataFactory.makeDbEpisode(episodeId)
+
+    // WHEN
+    localDataSource.insertEpisode(oldEpisode)
+    localDataSource.insertEpisode(updatedEpisode)
+
+    // THEN
+    val dbEpisodes = localDataSource.queryAllEpisodes()
+
+    assertThat(dbEpisodes.size, equalTo(1))
+    assertThat(dbEpisodes.first(), equalTo(updatedEpisode))
   }
 }

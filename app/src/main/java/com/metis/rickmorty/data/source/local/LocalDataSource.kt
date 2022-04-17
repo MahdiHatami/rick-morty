@@ -9,6 +9,8 @@ interface LocalDataSource {
 
   suspend fun queryAllEpisodesByPage(page: Int, pageSize: Int): List<DbEpisode>
 
+  suspend fun queryAllEpisodes(): List<DbEpisode>
+
   suspend fun insertCharacter(entityCharacter: DbCharacter)
 
   suspend fun queryCharacterByIds(characterIds: List<Int>): List<DbCharacter>
