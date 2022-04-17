@@ -1,5 +1,6 @@
 package com.metis.rickmorty.ui.episode
 
+import android.app.DownloadManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.metis.rickmorty.MainCoroutineRule
@@ -15,8 +16,10 @@ import com.metis.rickmorty.domain.model.ModelEpisode
 import com.metis.rickmorty.domain.model.PageQueryResult
 import com.metis.rickmorty.domain.model.QueryResult
 import com.metis.rickmorty.factory.ApiFactory
+import com.metis.rickmorty.factory.CharacterDataFactory
 import com.metis.rickmorty.factory.DataFactory
 import com.metis.rickmorty.factory.EpisodeDataFactory
+import com.metis.rickmorty.mapper.toModelCharacter
 import com.metis.rickmorty.runBlockingTest
 import com.metis.rickmorty.utils.StatusProvider
 import io.mockk.MockKAnnotations
@@ -134,10 +137,16 @@ internal class FakeRepository : Repository {
   }
 
   override suspend fun getCharactersByIds(characterIds: List<Int>): QueryResult<List<ModelCharacter>> {
-    TODO("Not yet implemented")
+    return QueryResult.Successful(
+      mutableListOf(
+        CharacterDataFactory.makeDbCharacter().toModelCharacter()
+      )
+    )
   }
 
   override suspend fun getCharacterDetails(characterId: Int): QueryResult<ModelCharacter?> {
-    TODO("Not yet implemented")
+    return QueryResult.Successful(
+      CharacterDataFactory.makeDbCharacter().toModelCharacter()
+    )
   }
 }
