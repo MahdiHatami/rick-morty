@@ -8,6 +8,7 @@ import com.metis.rickmorty.domain.model.QueryResult
 import com.metis.rickmorty.ui.mapper.toViewCharacterItem
 import com.metis.rickmorty.utils.LoadingState
 import com.metis.rickmorty.utils.StatusProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class CharacterListViewModel @Inject constructor(
   private val repository: Repository,
   private val statusProvider: StatusProvider,

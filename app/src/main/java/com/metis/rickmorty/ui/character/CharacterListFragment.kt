@@ -22,7 +22,7 @@ class CharacterListFragment : BaseFragment() {
 
   private val args: CharacterListFragmentArgs by navArgs()
 
-  private val viewModel by viewModels<CharacterListViewModel> { viewModelFactoryProvider }
+  private val viewModel: CharacterListViewModel by viewModels()
 
   override fun onCreateView(
     inflater: LayoutInflater,

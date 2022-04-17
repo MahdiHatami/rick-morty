@@ -1,6 +1,5 @@
 package com.metis.rickmorty.ui.characterDetail
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.metis.rickmorty.data.source.repository.Repository
@@ -8,11 +7,13 @@ import com.metis.rickmorty.domain.model.QueryResult
 import com.metis.rickmorty.ui.mapper.toViewCharacterDetails
 import com.metis.rickmorty.utils.LoadingState
 import com.metis.rickmorty.utils.StatusProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class CharacterDetailsViewModel @Inject constructor(
   private val repository: Repository,
   private val statusProvider: StatusProvider

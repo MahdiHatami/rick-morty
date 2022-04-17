@@ -1,5 +1,7 @@
 package com.metis.rickmorty.ui.episode
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.metis.rickmorty.data.source.repository.Repository
@@ -8,7 +10,9 @@ import com.metis.rickmorty.domain.model.PageQueryResult
 import com.metis.rickmorty.ui.mapper.toViewEpisodeItem
 import com.metis.rickmorty.utils.LoadingState
 import com.metis.rickmorty.utils.StatusProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +20,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EpisodeListViewModel  @Inject constructor(
+/**
+ * The ViewModel class is designed to store and manage UI-related data in a lifecycle conscious way.
+ */
+@HiltViewModel
+class EpisodeListViewModel @Inject constructor(
   private val repository: Repository,
   private val statusProvider: StatusProvider
 ) : ViewModel() {
@@ -32,8 +40,8 @@ class EpisodeListViewModel  @Inject constructor(
   private val _onError: MutableStateFlow<Boolean> = MutableStateFlow(false)
   val onError: StateFlow<Boolean> = _onError
 
-  private val _episodes: MutableStateFlow<List<ViewEpisodeItem>> = MutableStateFlow(emptyList())
-  val episodes: StateFlow<List<ViewEpisodeItem>> = _episodes
+  private val _episodes: MutableLiveData<List<ViewEpisodeItem>> = MutableLiveData(emptyList())
+  val episodes: LiveData<List<ViewEpisodeItem>> = _episodes
 
   private val _selectedEpisodeCharacterIds: Channel<IntArray> = Channel()
   val selectedEpisodeCharacterIds: Flow<IntArray> = _selectedEpisodeCharacterIds.receiveAsFlow()
@@ -64,7 +72,7 @@ class EpisodeListViewModel  @Inject constructor(
           if (page == 1) {
             _episodes.value = result.data.toViewEpisodeItems()
           } else {
-            _episodes.value = _episodes.value + result.data.toViewEpisodeItems()
+            _episodes.value = _episodes.value?.plus(result.data.toViewEpisodeItems())
           }
         }
         PageQueryResult.EndOfList -> _isEndOfList.value = true

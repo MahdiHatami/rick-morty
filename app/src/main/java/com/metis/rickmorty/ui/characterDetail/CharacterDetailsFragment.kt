@@ -19,7 +19,7 @@ class CharacterDetailsFragment : BaseFragment() {
 
   private val args: CharacterDetailsFragmentArgs by navArgs()
 
-  private val viewModel by viewModels<CharacterDetailsViewModel> { viewModelFactoryProvider }
+  private val viewModel: CharacterDetailsViewModel by viewModels()
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -54,6 +54,5 @@ class CharacterDetailsFragment : BaseFragment() {
         if (it) onNoOfflineData()
       }
     }
-
   }
 }
