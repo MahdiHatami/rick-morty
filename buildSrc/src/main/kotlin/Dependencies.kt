@@ -1,7 +1,5 @@
 import org.gradle.api.JavaVersion
 
-
-
 object Config {
   const val minSdkVersion = 26
   const val compileSdkVersion = 30
@@ -10,11 +8,9 @@ object Config {
   const val versionCode = 1
   val javaVersion = JavaVersion.VERSION_11
   const val buildTools = "30.0.3"
-  const val isMultiDexEnabled = true
   const val applicationId = "com.metis.rickmorty"
   const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
-
 
 /**Helps handle group of libraries**/
 interface Libraries {
@@ -24,19 +20,14 @@ interface Libraries {
 object Plugins {
   object Version {
     const val gradleAndroidVersion = "7.0.2"
-    const val googleServices = "4.3.5"
   }
 
   const val gradleAndroid = "com.android.tools.build:gradle:${Version.gradleAndroidVersion}"
   const val kotlinGradlePlugin =
     "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.Versions.kotlin}"
-  const val googleServices = "com.google.gms:google-services:${Version.googleServices}"
-  const val crashlyticsPlugin =
-    "com.google.firebase:firebase-crashlytics-gradle:${Firebase.Versions.crashlytics_plugin}"
   const val safeArgs =
     "androidx.navigation:navigation-safe-args-gradle-plugin:${Navigation.Versions.navigation}"
 }
-
 
 object Kotlin {
 
@@ -49,14 +40,11 @@ object Kotlin {
   const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
   const val coroutinesAndroid =
     "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-  const val coroutinesCore =
-    "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
   const val coroutineTest =
     "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
   const val kotlinxSerialization =
     "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxJson}"
 }
-
 
 object AndroidX : Libraries {
   private object Versions {
@@ -64,9 +52,6 @@ object AndroidX : Libraries {
     const val appCompat = "1.2.0"
     const val lifeCycle = "2.3.0-alpha03"
     const val preferences = "1.1.1"
-    const val legacy = "1.0.0"
-    const val work = "2.5.0"
-    const val paging = "2.1.2"
     const val fragment = "1.3.0-alpha06"
 
     const val archCoreTesting = "2.1.0"
@@ -82,11 +67,7 @@ object AndroidX : Libraries {
     "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifeCycle}"
   const val lifeCycleCommon =
     "androidx.lifecycle:lifecycle-common-java8:${Versions.lifeCycle}"
-  const val legacySupport = "androidx.legacy:legacy-support-v4:${Versions.legacy}"
   const val preferences = "androidx.preference:preference-ktx:${Versions.preferences}"
-
-  const val workManager = "androidx.work:work-runtime-ktx:${Versions.work}"
-  const val paging = "androidx.paging:paging-runtime-ktx:${Versions.paging}"
 
   const val archCoreTesting = "androidx.arch.core:core-testing:${Versions.archCoreTesting}"
   const val coreKtxTest = "androidx.test:core-ktx:${Versions.coreKtxTest}"
@@ -94,16 +75,14 @@ object AndroidX : Libraries {
   const val testRules = "androidx.test:rules:${Versions.testRules}"
   const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragment}"
 
-
   override val components: List<String>
     get() = listOf(coreKtx, viewModel, appCompat, lifeCycleCommon, liveData, preferences)
 }
 
-
 object Dagger : Libraries {
 
   private object Versions {
-    const val hilt = "2.40.1"
+    const val hilt = "2.41"
   }
 
   const val daggerHilt = "com.google.dagger:hilt-android:${Versions.hilt}"
@@ -130,11 +109,9 @@ object Network : Libraries {
   const val okhttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
   const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
-
   override val components: List<String>
     get() = listOf(retrofit, okhttp, okhttpInterceptor, gson)
 }
-
 
 object Database : Libraries {
 
@@ -150,7 +127,6 @@ object Database : Libraries {
     get() = listOf(roomRuntime, roomKtx)
 }
 
-
 object Navigation : Libraries {
 
   object Versions {
@@ -165,7 +141,6 @@ object Navigation : Libraries {
     get() = listOf(navigationFragment, navigationUi)
 }
 
-
 object View : Libraries {
 
   private object Versions {
@@ -174,7 +149,6 @@ object View : Libraries {
     const val constraintLayout = "2.0.4"
     const val swipeRefresh = "1.1.0"
     const val viewPager = "1.0.0"
-
   }
 
   const val material = "com.google.android.material:material:${Versions.material}"
@@ -191,36 +165,29 @@ object View : Libraries {
   )
 }
 
-
 object Utils : Libraries {
 
   private object Versions {
     const val timber = "4.7.1"
-    const val glide = "4.12.0"
     const val picasso = "2.71828"
   }
 
   const val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
   const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
-  const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-  const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
   override val components: List<String>
-    get() = listOf(timber, glide)
+    get() = listOf(timber, picasso)
 }
-
 
 object UnitTest : Libraries {
   private object Versions {
     const val junit = "4.13.2"
-    const val mockito = "4.0.0"
-    const val mockk= "1.12.2"
+    const val mockk = "1.12.2"
     const val hamcrest = "1.3"
     const val roboelectric = "4.7.3"
   }
 
   const val junit = "junit:junit:${Versions.junit}"
   const val roomTest = "androidx.room:room-testing:${Database.Versions.room}"
-  const val mockitoCore = "org.mockito:mockito-core:${Versions.mockito}"
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
   const val hamcrest = "org.hamcrest:hamcrest-all:${Versions.hamcrest}"
   const val roboelectric = "org.robolectric:robolectric:${Versions.roboelectric}"
@@ -228,7 +195,6 @@ object UnitTest : Libraries {
   override val components: List<String>
     get() = listOf(junit)
 }
-
 
 object AndroidTest : Libraries {
   private object Versions {
@@ -244,27 +210,4 @@ object AndroidTest : Libraries {
 
   override val components: List<String>
     get() = listOf(espresso, junitExt)
-}
-
-
-object Firebase {
-
-  object Versions {
-    const val firebase = "29.0.0"
-    const val crashlytics_plugin = "2.8.0"
-  }
-
-  // When using the BoM, you don't specify versions in Firebase library dependencies
-  const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebase}"
-  const val analytics = "com.google.firebase:firebase-analytics-ktx"
-  const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
-}
-
-object Google {
-
-  object Versions {
-    const val play = "18.0.0"
-  }
-
-  const val googlePlayGms = "com.google.android.gms:play-services-location:${Versions.play}"
 }

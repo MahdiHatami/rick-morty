@@ -9,31 +9,11 @@ plugins {
   id("kotlin-parcelize")
   id("androidx.navigation.safeargs")
   id("dagger.hilt.android.plugin")
+  id("io.gitlab.arturbosch.detekt") version "1.20.0"
 }
 
 android {
   compileSdk = Config.compileSdkVersion
-  buildToolsVersion = Config.buildTools
-  if (project.hasProperty("keystore.properties")) {
-    val keystorePropertiesFile = rootProject.file("keystore.properties")
-    val keystoreProperties = Properties()
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-
-    signingConfigs {
-      getByName("debug") {
-        keyAlias = keystoreProperties["keyAlias"].toString()
-        keyPassword = keystoreProperties["keyPassword"].toString()
-        storeFile = file(rootDir.absolutePath + keystoreProperties["storeFile"])
-        storePassword = keystoreProperties["storePassword"].toString()
-      }
-      create("release") {
-        keyAlias = keystoreProperties["keyAlias"].toString()
-        keyPassword = keystoreProperties["keyPassword"].toString()
-        storeFile = file(rootDir.absolutePath + keystoreProperties["storeFile"])
-        storePassword = keystoreProperties["storePassword"].toString()
-      }
-    }
-  }
 
   defaultConfig {
     applicationId = Config.applicationId
@@ -123,16 +103,13 @@ dependencies {
   implementation(AndroidX.appCompat)
   implementation(AndroidX.coreKtx)
   implementation(View.constraintLayout)
-  implementation(AndroidX.legacySupport)
+  implementation(View.swipeRefresh)
 
   // Material Design
   implementation(View.material)
 
   // Room
   implementation(Database.roomRuntime)
-  implementation("androidx.legacy:legacy-support-v4:1.0.0")
-  implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
   kapt(Database.roomCompiler)
   implementation(Database.roomKtx)
 
@@ -155,19 +132,10 @@ dependencies {
   // Timber
   implementation(Utils.timber)
 
-  // Google Play Services
-  implementation(Google.googlePlayGms)
-
   // Lifecycle KTX
   implementation(AndroidX.viewModel)
   implementation(AndroidX.liveData)
   implementation(AndroidX.lifeCycleCommon)
-
-  // Paging Library
-  implementation(AndroidX.paging)
-
-  // WorkManager
-  implementation(AndroidX.workManager)
 
   // Dagger-Hilt
   implementation(Dagger.daggerHilt)
