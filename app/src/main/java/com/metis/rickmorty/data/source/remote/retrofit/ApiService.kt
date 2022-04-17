@@ -37,6 +37,9 @@ interface ApiService {
     characterIds: String,
   ): Response<List<ApiCharacter>>
 
+  /**
+   * This function gets the [character details by given id]
+   */
   @GET(value = "$CHARACTER_ENDPOINT{$PATH_KEY_CHARACTER_ID}")
   suspend fun fetchCharacterDetails(
     @Path(value = PATH_KEY_CHARACTER_ID)

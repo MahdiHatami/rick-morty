@@ -1,35 +1,37 @@
 package com.metis.rickmorty.factory
 
+import com.metis.rickmorty.domain.model.ModelEpisode
+import com.metis.rickmorty.ui.episode.ViewEpisodeItem
 import java.util.ArrayList
 import java.util.UUID
 import java.util.concurrent.ThreadLocalRandom
 
 object DataFactory {
 
-    fun randomString(): String = UUID.randomUUID().toString()
+  fun randomString(): String = UUID.randomUUID().toString()
 
-    fun randomStringList(count: Int): List<String> {
-        val list: MutableList<String> = ArrayList()
+  fun randomStringList(count: Int): List<String> {
+    val list: MutableList<String> = ArrayList()
 
-        repeat(count) {
-            list.add(randomString())
-        }
-
-        return list
+    repeat(count) {
+      list.add(randomString())
     }
 
-    fun randomInt(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Int =
-        ThreadLocalRandom.current().nextInt(min, max)
+    return list
+  }
 
-    fun randomIntList(count: Int, min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): List<Int> {
-        val list: MutableList<Int> = ArrayList()
+  fun randomInt(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Int =
+    ThreadLocalRandom.current().nextInt(min, max)
 
-        repeat(count) {
-            list.add(randomInt(min, max))
-        }
+  fun randomIntList(count: Int, min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): List<Int> {
+    val list: MutableList<Int> = ArrayList()
 
-        return list
+    repeat(count) {
+      list.add(randomInt(min, max))
     }
 
-    fun randomBoolean(): Boolean = Math.random() < 0.5
+    return list
+  }
+
+  fun randomBoolean(): Boolean = Math.random() < 0.5
 }
