@@ -6,6 +6,7 @@ import com.metis.rickmorty.data.source.local.entity.DbCharacter
 import com.metis.rickmorty.factory.ApiFactory
 import com.metis.rickmorty.factory.CharacterDataFactory
 import com.metis.rickmorty.factory.DataFactory
+import com.metis.rickmorty.runBlockingTest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.just
@@ -18,7 +19,7 @@ import org.junit.Test
 class RepositoryGetCharactersTest : RepositoryTest() {
 
   @Test
-  fun `getCharacters call api and db when device isOnline`() = runBlockingTest {
+  fun `getCharacters call api and db when device isOnline`() = coroutineRule.runBlockingTest {
     // GIVEN
     val characterIds: List<Int> = DataFactory.randomIntList(count = 5)
     stubStatusProviderIsOnline(true)
@@ -33,11 +34,11 @@ class RepositoryGetCharactersTest : RepositoryTest() {
     // THEN
     coVerify(exactly = 1) { api.fetchCharactersByIds(ids = any()) }
     coVerify(exactly = 1) { database.insertCharacter(entityCharacter = any()) }
-    coVerify(exactly = 1) { database.queryCharacterByIds(ids = any()) }
+    coVerify(exactly = 1) { database.queryCharacterByIds(characterIds = any()) }
   }
 
   @Test
-  fun `getCharacters call on db when device isOffline`() = runBlockingTest {
+  fun `getCharacters call on db when device isOffline`() = coroutineRule.runBlockingTest {
     // GIVEN
     val characterIds: List<Int> = DataFactory.randomIntList(count = 5)
     stubStatusProviderIsOnline(false)
@@ -51,7 +52,7 @@ class RepositoryGetCharactersTest : RepositoryTest() {
 
     // THEN
     coVerify(exactly = 0) { api.fetchCharactersByIds(ids = any()) }
-    coVerify(exactly = 1) { database.queryCharacterByIds(ids = any()) }
+    coVerify(exactly = 1) { database.queryCharacterByIds(characterIds = any()) }
   }
 
   @Test
@@ -71,7 +72,7 @@ class RepositoryGetCharactersTest : RepositoryTest() {
 
   private fun stubCharacterDaoQueryAllCharacterByIds(entityCharacters: List<DbCharacter>) {
     coEvery {
-      database.queryCharacterByIds(ids = any())
+      database.queryCharacterByIds(characterIds = any())
     } returns entityCharacters
   }
 

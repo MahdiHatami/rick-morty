@@ -9,17 +9,6 @@ import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 
-  @Inject
-  lateinit var viewModelFactoryProvider: ViewModelProvider.Factory
-
-  fun showShortSnackBar(message: String) {
-    Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
-  }
-
-  fun showLongSnackBar(message: String) {
-    Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
-  }
-
   fun showErrorMessage() {
     Toast.makeText(context, R.string.error_message, Toast.LENGTH_LONG).show()
   }

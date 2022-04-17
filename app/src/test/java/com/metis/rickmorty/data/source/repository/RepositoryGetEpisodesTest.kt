@@ -5,6 +5,7 @@ import com.metis.rickmorty.data.model.ApiEpisodes
 import com.metis.rickmorty.data.model.ApiResult
 import com.metis.rickmorty.data.source.local.entity.DbEpisode
 import com.metis.rickmorty.factory.EpisodeDataFactory
+import com.metis.rickmorty.runBlockingTest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.just
@@ -17,7 +18,7 @@ import org.junit.Test
 class RepositoryGetEpisodesTest : RepositoryTest() {
 
   @Test
-  fun `getEpisodes calls api and db when device isOnline`() = runBlockingTest {
+  fun `getEpisodes calls api and db when device isOnline`() = coroutineRule.runBlockingTest {
     // GIVEN
     stubStatusProviderIsOnline(isOnline = true)
     stubApiFetchEpisodes(ApiFactory.Episode.makeApiEpisodes())
@@ -35,7 +36,7 @@ class RepositoryGetEpisodesTest : RepositoryTest() {
   }
 
   @Test
-  fun `getEpisodes call on db when device offline`() = runBlockingTest {
+  fun `getEpisodes call on db when device offline`() = coroutineRule.runBlockingTest {
     // GIVEN
     stubStatusProviderIsOnline(isOnline = false)
     val entityEpisodes = EpisodeDataFactory.makeDbEpisodes(count = 6)
