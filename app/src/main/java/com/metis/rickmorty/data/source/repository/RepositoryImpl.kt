@@ -8,6 +8,7 @@ import com.metis.rickmorty.data.source.local.LocalDataSource
 import com.metis.rickmorty.data.source.local.entity.DbCharacter
 import com.metis.rickmorty.data.source.local.entity.DbEpisode
 import com.metis.rickmorty.data.source.remote.RemoteDataSource
+import com.metis.rickmorty.di.scope.IoDispatcher
 import com.metis.rickmorty.domain.model.ModelCharacter
 import com.metis.rickmorty.domain.model.ModelEpisode
 import com.metis.rickmorty.domain.model.PageQueryResult
@@ -17,12 +18,15 @@ import com.metis.rickmorty.mapper.toDbEpisode
 import com.metis.rickmorty.mapper.toModelCharacter
 import com.metis.rickmorty.mapper.toModelEpisode
 import com.metis.rickmorty.utils.StatusProvider
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
   private val api: RemoteDataSource,
   private val db: LocalDataSource,
   private val statusProvider: StatusProvider,
+  @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : Repository {
   override suspend fun getEpisodes(page: Int): PageQueryResult<List<ModelEpisode>> {
     if (statusProvider.isOnline()) {
@@ -44,7 +48,7 @@ class RepositoryImpl @Inject constructor(
     return queryDbCharacterById(characterId)
   }
 
-  private suspend fun queryDbCharacterById(characterId: Int): QueryResult<ModelCharacter?>{
+  private suspend fun queryDbCharacterById(characterId: Int): QueryResult<ModelCharacter?> {
     val entity = db.queryCharacterById(characterId)
     val modelCharacter = entity?.toModelCharacter()
     return QueryResult.Successful(modelCharacter)
@@ -64,17 +68,21 @@ class RepositoryImpl @Inject constructor(
   }
 
   private suspend fun fetchCharactersByIds(characterIds: List<Int>): QueryResult<List<ApiCharacter>> =
-    when (val result = api.fetchCharactersByIds(characterIds.joinToString(","))) {
-      is ApiResult.Success -> QueryResult.Successful(result.data)
-      is ApiResult.Error.ServerError,
-      is ApiResult.Error.UnknownError
-      -> QueryResult.Error
+    withContext(ioDispatcher) {
+      when (val result = api.fetchCharactersByIds(characterIds.joinToString(","))) {
+        is ApiResult.Success -> QueryResult.Successful(result.data)
+        is ApiResult.Error.ServerError,
+        is ApiResult.Error.UnknownError
+        -> QueryResult.Error
+      }
     }
 
   private suspend fun fetchEpisodes(page: Int): PageQueryResult<List<ApiEpisode>> =
-    when (val result = api.fetchEpisodes(page)) {
-      is ApiResult.Success -> PageQueryResult.Successful(result.data.results)
-      is ApiResult.Error -> PageQueryResult.Error
+    withContext(ioDispatcher) {
+      when (val result = api.fetchEpisodes(page)) {
+        is ApiResult.Success -> PageQueryResult.Successful(result.data.results)
+        is ApiResult.Error -> PageQueryResult.Error
+      }
     }
 
   private suspend fun cacheEpisodes(episodes: List<ApiEpisode>) {

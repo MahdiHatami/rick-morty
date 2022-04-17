@@ -5,10 +5,13 @@ import com.metis.rickmorty.data.model.ApiCharacter
 import com.metis.rickmorty.data.model.ApiEpisodes
 import com.metis.rickmorty.data.model.ApiResult
 import com.metis.rickmorty.data.source.remote.retrofit.ApiService
+import com.metis.rickmorty.di.scope.IoDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
-  private val api: ApiService
+  private val api: ApiService,
 ) : RemoteDataSource {
 
   override suspend fun fetchEpisodes(page: Int): ApiResult<ApiEpisodes> =

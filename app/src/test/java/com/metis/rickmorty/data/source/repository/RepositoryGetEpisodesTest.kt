@@ -11,7 +11,6 @@ import io.mockk.coVerify
 import io.mockk.just
 import io.mockk.runs
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
