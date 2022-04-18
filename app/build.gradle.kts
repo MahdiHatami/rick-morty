@@ -153,7 +153,6 @@ dependencies {
     testImplementation(UnitTest.hamcrest)
     testImplementation(Kotlin.coroutineTest)
     testImplementation(UnitTest.mockk)
-    debugImplementation("androidx.fragment:fragment-testing:1.4.1")
 
     // AndroidX Test - Instrumented testing
     androidTestImplementation(UnitTest.mockk)

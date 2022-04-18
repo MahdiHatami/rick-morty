@@ -1,6 +1,11 @@
 package com.metis.rickmorty.factory
 
-import com.metis.rickmorty.data.model.*
+import com.metis.rickmorty.data.model.ApiCharacter
+import com.metis.rickmorty.data.model.ApiEpisodes
+import com.metis.rickmorty.data.model.ApiEpisode
+import com.metis.rickmorty.data.model.ApiInfo
+import com.metis.rickmorty.data.model.ApiLocation
+import com.metis.rickmorty.data.model.ApiOrigin
 
 object ApiFactory {
 
@@ -17,28 +22,6 @@ object ApiFactory {
         private const val VALUE_CHARACTER: String = "https://rickandmortyapi.com/api/character/1"
         private const val VALUE_URL: String = "https://rickandmortyapi.com/api/episode/1"
         private const val VALUE_CREATED: String = "2017-11-10T12:56:33.798Z"
-
-        const val EPISODES_JSON: String = """{
-  "info": {
-    "count": $VALUE_COUNT,
-    "pages": $VALUE_PAGE,
-    "next": $VALUE_NEXT,
-    "prev": $VALUE_PREV
-  },
-  "results": [
-    {
-      "id": $VALUE_ID,
-      "name": $VALUE_NAME,
-      "air_date": $VALUE_AIR_DATE,
-      "episode": $VALUE_EPISODE,
-      "characters": [
-        $VALUE_CHARACTER
-      ],
-      "url": $VALUE_URL,
-      "created": $VALUE_CREATED
-    }
-  ]
-}"""
 
         internal fun makeApiEpisodes(): ApiEpisodes {
             val info = ApiInfo(
@@ -66,8 +49,6 @@ object ApiFactory {
     }
 
     object Characters {
-        const val CHARACTERS_JSON: String = "[\n  ${CharacterDetails.CHARACTER_DETAILS_JSON}\n]"
-
         internal fun makeCharacters(): List<ApiCharacter> {
             val character: ApiCharacter = CharacterDetails.makeCharacter()
             return arrayListOf(character)
@@ -90,29 +71,6 @@ object ApiFactory {
         private const val VALUE_EPISODE: String = "https://rickandmortyapi.com/api/episode/1"
         private const val VALUE_URL: String = "https://rickandmortyapi.com/api/character/1"
         private const val VALUE_CREATED: String = "2017-11-04T18:48:46.250Z"
-
-        const val CHARACTER_DETAILS_JSON: String = """{
-  "id": $VALUE_ID,
-  "name": "$VALUE_NAME",
-  "status": "$VALUE_STATUS",
-  "species": "$VALUE_SPECIES",
-  "type": "$VALUE_TYPE",
-  "gender": "$VALUE_GENDER",
-  "origin": {
-    "name": "$VALUE_ORIGIN_NAME",
-    "url": "$VALUE_ORIGIN_URL"
-  },
-  "location": {
-    "name": "$VALUE_LOCATION_NAME",
-    "url": "$VALUE_LOCATION_URL"
-  },
-  "image": "$VALUE_IMAGE",
-  "episode": [
-    "$VALUE_EPISODE"
-  ],
-  "url": "$VALUE_URL",
-  "created": "$VALUE_CREATED"
-}"""
 
         internal fun makeCharacter(): ApiCharacter {
             val origin = ApiOrigin(
