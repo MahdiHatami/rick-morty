@@ -19,7 +19,11 @@ import com.metis.rickmorty.factory.CharacterDataFactory
 import com.metis.rickmorty.factory.EpisodeDataFactory
 import com.metis.rickmorty.mapper.toModelCharacter
 import com.metis.rickmorty.utils.StatusProvider
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.just
+import io.mockk.runs
+import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

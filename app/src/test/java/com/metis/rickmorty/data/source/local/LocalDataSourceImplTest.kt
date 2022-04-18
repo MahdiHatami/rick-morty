@@ -12,9 +12,9 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.notNullValue
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

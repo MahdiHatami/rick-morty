@@ -84,6 +84,13 @@ android {
     }
 }
 
+ktlint {
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+}
+
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(Kotlin.stdlib)

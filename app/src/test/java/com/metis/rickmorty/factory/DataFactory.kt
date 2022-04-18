@@ -1,7 +1,8 @@
 package com.metis.rickmorty.factory
 
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.ThreadLocalRandom
+import kotlin.collections.ArrayList
 
 object DataFactory {
 
