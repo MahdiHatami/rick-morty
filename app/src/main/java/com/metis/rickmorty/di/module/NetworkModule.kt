@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-  @Provides
-  @Singleton
-  fun provideApiService(retrofit: Retrofit): ApiService {
-    return retrofit.create(ApiService::class.java)
-  }
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
+    }
 }

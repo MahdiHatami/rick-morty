@@ -5,36 +5,36 @@
     android:id="@+id/navigation"
     app:startDestination="@id/episodeListFragment">
 
-  <fragment
-      android:id="@+id/episodeListFragment"
-      android:name="com.metis.rickmorty.ui.episode.EpisodeListFragment"
-      android:label="@string/home_dashboard"
-      tools:layout="@layout/episode_list_fragment">
-    <action
-        android:id="@+id/action_episodeListFragment_to_characterListFragment"
-        app:destination="@id/characterListFragment" />
-  </fragment>
+    <fragment
+        android:id="@+id/episodeListFragment"
+        android:name="com.metis.rickmorty.ui.episode.EpisodeListFragment"
+        android:label="@string/home_dashboard"
+        tools:layout="@layout/episode_list_fragment">
+        <action
+            android:id="@+id/action_episodeListFragment_to_characterListFragment"
+            app:destination="@id/characterListFragment" />
+    </fragment>
 
-  <fragment
-      android:id="@+id/characterListFragment"
-      android:name="com.metis.rickmorty.ui.character.CharacterListFragment"
-      android:label="Characters List"
-      tools:layout="@layout/character_list_fragment">
-    <argument
-        android:name="characterIds"
-        app:argType="integer[]" />
-    <action
-        android:id="@+id/action_characterListFragment_to_characterDetails"
-        app:destination="@id/characterDetails" />
-  </fragment>
-  <fragment
-      android:id="@+id/characterDetails"
-      android:name="com.metis.rickmorty.ui.characterDetail.CharacterDetailsFragment"
-      android:label="character_details_fragment"
-      tools:layout="@layout/character_details_fragment">
-    <argument
-        android:name="characterId"
-        app:argType="integer" />
-  </fragment>
+    <fragment
+        android:id="@+id/characterListFragment"
+        android:name="com.metis.rickmorty.ui.character.CharacterListFragment"
+        android:label="Characters List"
+        tools:layout="@layout/character_list_fragment">
+        <argument
+            android:name="characterIds"
+            app:argType="integer[]" />
+        <action
+            android:id="@+id/action_characterListFragment_to_characterDetails"
+            app:destination="@id/characterDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetails"
+        android:name="com.metis.rickmorty.ui.characterDetail.CharacterDetailsFragment"
+        android:label="character_details_fragment"
+        tools:layout="@layout/character_details_fragment">
+        <argument
+            android:name="characterId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

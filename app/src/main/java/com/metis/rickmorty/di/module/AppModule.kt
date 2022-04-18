@@ -23,78 +23,78 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
-  @Provides
-  @Singleton
-  fun provideContext(application: Application): Context {
-    return application.applicationContext
-  }
-
-  @Provides
-  @Singleton
-  fun provideSharedPreferencesHelper(context: Context): SharedPreferenceHelper {
-    return SharedPreferenceHelper.getInstance(context)
-  }
-
-  @Provides
-  @Singleton
-  fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
-    return OkHttpClient.Builder().addInterceptor(interceptor).build()
-  }
-
-  @Provides
-  @Singleton
-  fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-    return HttpLoggingInterceptor().apply {
-      level = if (BuildConfig.DEBUG) {
-        HttpLoggingInterceptor.Level.BODY
-      } else {
-        HttpLoggingInterceptor.Level.NONE
-      }
+    @Provides
+    @Singleton
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
     }
-  }
 
-  @Provides
-  @Singleton
-  fun provideGson(): Gson = Gson()
-
-  @Provides
-  @Singleton
-  fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory {
-    return GsonConverterFactory.create(gson)
-  }
-
-  @Provides
-  @Singleton
-  fun provideRetrofitBuilder(
-    client: Lazy<OkHttpClient>,
-    converterFactory: GsonConverterFactory,
-    context: Context
-  ): Retrofit {
-    val retrofitBuilder = Retrofit.Builder()
-      .baseUrl(BuildConfig.BASE_URL)
-      .client(client.get())
-      .addConverterFactory(converterFactory)
-
-    val okHttpClientBuilder = OkHttpClient.Builder()
-      .addInterceptor { chain ->
-
-        val original = chain.request()
-        val originalHttpUrl = original.url
-
-        val url = originalHttpUrl.newBuilder().build()
-
-        Timber.d("Started making network call")
-
-        val requestBuilder = original.newBuilder()
-          .url(url)
-
-        val request = requestBuilder.build()
-        return@addInterceptor chain.proceed(request)
-      }
-      .readTimeout(60, TimeUnit.SECONDS)
-    if (BuildConfig.DEBUG) {
-      okHttpClientBuilder.addInterceptor(ChuckInterceptor(context))
+    @Provides
+    @Singleton
+    fun provideSharedPreferencesHelper(context: Context): SharedPreferenceHelper {
+        return SharedPreferenceHelper.getInstance(context)
     }
-    return retrofitBuilder.client(okHttpClientBuilder.build()).build()
-  }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient.Builder().addInterceptor(interceptor).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson = Gson()
+
+    @Provides
+    @Singleton
+    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory {
+        return GsonConverterFactory.create(gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofitBuilder(
+        client: Lazy<OkHttpClient>,
+        converterFactory: GsonConverterFactory,
+        context: Context
+    ): Retrofit {
+        val retrofitBuilder = Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(client.get())
+            .addConverterFactory(converterFactory)
+
+        val okHttpClientBuilder = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+
+                val original = chain.request()
+                val originalHttpUrl = original.url
+
+                val url = originalHttpUrl.newBuilder().build()
+
+                Timber.d("Started making network call")
+
+                val requestBuilder = original.newBuilder()
+                    .url(url)
+
+                val request = requestBuilder.build()
+                return@addInterceptor chain.proceed(request)
+            }
+            .readTimeout(60, TimeUnit.SECONDS)
+        if (BuildConfig.DEBUG) {
+            okHttpClientBuilder.addInterceptor(ChuckInterceptor(context))
+        }
+        return retrofitBuilder.client(okHttpClientBuilder.build()).build()
+    }
 }

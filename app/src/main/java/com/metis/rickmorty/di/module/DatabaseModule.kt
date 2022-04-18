@@ -15,26 +15,26 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule {
 
-  @Singleton
-  @Provides
-  fun provideDatabase(context: Context): RMDatabase {
-    return Room.databaseBuilder(
-      context,
-      RMDatabase::class.java, "YRM.db"
-    )
-      .fallbackToDestructiveMigration()
-      .build()
-  }
+    @Singleton
+    @Provides
+    fun provideDatabase(context: Context): RMDatabase {
+        return Room.databaseBuilder(
+            context,
+            RMDatabase::class.java, "YRM.db"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
-  @Singleton
-  @Provides
-  fun provideEpisodeDao(database: RMDatabase): EpisodeDao {
-    return database.episodeDao
-  }
+    @Singleton
+    @Provides
+    fun provideEpisodeDao(database: RMDatabase): EpisodeDao {
+        return database.episodeDao
+    }
 
-  @Singleton
-  @Provides
-  fun provideCharacterDao(database: RMDatabase): CharacterDao {
-    return database.characterDao
-  }
+    @Singleton
+    @Provides
+    fun provideCharacterDao(database: RMDatabase): CharacterDao {
+        return database.characterDao
+    }
 }

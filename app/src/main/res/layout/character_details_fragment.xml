@@ -1,163 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-  <data>
+    <data>
 
-    <variable
-        name="viewModel"
-        type="com.metis.rickmorty.ui.characterDetail.CharacterDetailsViewModel" />
-  </data>
+        <variable
+            name="viewModel"
+            type="com.metis.rickmorty.ui.characterDetail.CharacterDetailsViewModel" />
+    </data>
 
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      tools:context=".view.character.details.CharacterDetailsFragment">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-      <ProgressBar
-          android:id="@+id/characterDetailsProgress"
-          isLoading="@{viewModel.loadingState}"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal" />
-
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-        <com.metis.rickmorty.ui.util.SquareImageView
-            imageUrl="@{viewModel.character.imageUrl}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            tools:src="@mipmap/ic_launcher" />
+        android:layout_height="match_parent"
+        tools:context=".view.character.details.CharacterDetailsFragment">
 
         <LinearLayout
-            android:background="@color/characterDetailsNameBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical"
-            android:padding="@dimen/line_padding">
+            android:orientation="vertical">
 
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="@{viewModel.character.name}"
-              android:textAppearance="@style/textAppearanceListItemTitle"
-              android:textColor="@color/whiteColor"
-              tools:text="Character Name" />
+            <ProgressBar
+                android:id="@+id/characterDetailsProgress"
+                isLoading="@{viewModel.loadingState}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
 
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="@{String.format(@string/character_details_format, viewModel.character.id, viewModel.character.created)}"
-              android:textColor="@color/whiteColor"
-              android:textAppearance="@style/textAppearanceListItemText"
-              tools:text="id: x - Created ..." />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.metis.rickmorty.ui.util.SquareImageView
+                    imageUrl="@{viewModel.character.imageUrl}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:background="@color/characterDetailsNameBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:padding="@dimen/line_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.character.name}"
+                        android:textAppearance="@style/textAppearanceListItemTitle"
+                        android:textColor="@color/whiteColor"
+                        tools:text="Character Name" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/character_details_format, viewModel.character.id, viewModel.character.created)}"
+                        android:textColor="@color/whiteColor"
+                        android:textAppearance="@style/textAppearanceListItemText"
+                        tools:text="id: x - Created ..." />
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/line_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/character_species"
+                    android:textAppearance="@style/textAppearanceListItemText" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@{viewModel.character.species}"
+                    android:textAppearance="@style/textAppearanceListItemText"
+                    tools:text="Human" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/line_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/character_gender"
+                    android:textAppearance="@style/textAppearanceListItemText" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@{viewModel.character.gender}"
+                    android:textAppearance="@style/textAppearanceListItemText"
+                    tools:text="Male" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/line_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/character_origin"
+                    android:textAppearance="@style/textAppearanceListItemText" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@{viewModel.character.origin}"
+                    android:textAppearance="@style/textAppearanceListItemText"
+                    tools:text="unknown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/line_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/character_last_location"
+                    android:textAppearance="@style/textAppearanceListItemText" />
+
+                <TextView
+                    android:id="@+id/characterLastLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@{viewModel.character.location}"
+                    android:textAppearance="@style/textAppearanceListItemText"
+                    tools:text="unknown" />
+            </LinearLayout>
         </LinearLayout>
-      </FrameLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/line_padding"
-          android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/character_species"
-            android:textAppearance="@style/textAppearanceListItemText" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:text="@{viewModel.character.species}"
-            android:textAppearance="@style/textAppearanceListItemText"
-            tools:text="Human" />
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/line_padding"
-          android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/character_gender"
-            android:textAppearance="@style/textAppearanceListItemText" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:text="@{viewModel.character.gender}"
-            android:textAppearance="@style/textAppearanceListItemText"
-            tools:text="Male" />
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/line_padding"
-          android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/character_origin"
-            android:textAppearance="@style/textAppearanceListItemText" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:text="@{viewModel.character.origin}"
-            android:textAppearance="@style/textAppearanceListItemText"
-            tools:text="unknown" />
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/line_padding"
-          android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/character_last_location"
-            android:textAppearance="@style/textAppearanceListItemText" />
-
-        <TextView
-            android:id="@+id/characterLastLocation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:text="@{viewModel.character.location}"
-            android:textAppearance="@style/textAppearanceListItemText"
-            tools:text="unknown" />
-      </LinearLayout>
-    </LinearLayout>
-  </ScrollView>
+    </ScrollView>
 
 </layout>

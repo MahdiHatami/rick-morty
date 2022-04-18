@@ -5,15 +5,15 @@ import com.metis.rickmorty.data.source.local.entity.DbEpisode
 
 interface LocalDataSource {
 
-  suspend fun insertEpisode(entityEpisode: DbEpisode)
+    suspend fun insertEpisode(entityEpisode: DbEpisode)
 
-  suspend fun queryAllEpisodesByPage(page: Int, pageSize: Int): List<DbEpisode>
+    suspend fun queryAllEpisodesByPage(page: Int, pageSize: Int): List<DbEpisode>
 
-  suspend fun queryAllEpisodes(): List<DbEpisode>
+    suspend fun queryAllEpisodes(): List<DbEpisode>
 
-  suspend fun insertCharacter(entityCharacter: DbCharacter)
+    suspend fun insertCharacter(entityCharacter: DbCharacter)
 
-  suspend fun queryCharacterByIds(characterIds: List<Int>): List<DbCharacter>
+    suspend fun queryCharacterByIds(characterIds: List<Int>): List<DbCharacter>
 
-  suspend fun queryCharacterById(id: Int): DbCharacter?
+    suspend fun queryCharacterById(id: Int): DbCharacter?
 }

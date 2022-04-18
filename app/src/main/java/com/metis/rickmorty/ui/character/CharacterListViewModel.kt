@@ -19,57 +19,57 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
-  private val repository: Repository,
-  private val statusProvider: StatusProvider,
+    private val repository: Repository,
+    private val statusProvider: StatusProvider,
 ) : ViewModel() {
 
-  private val _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.None)
-  val loadingState: StateFlow<LoadingState> = _loadingState
+    private val _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.None)
+    val loadingState: StateFlow<LoadingState> = _loadingState
 
-  private val _isOffline: MutableStateFlow<Boolean> = MutableStateFlow(false)
-  val isOffline: StateFlow<Boolean> = _isOffline
+    private val _isOffline: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isOffline: StateFlow<Boolean> = _isOffline
 
-  private val _isNoCache: MutableStateFlow<Boolean> = MutableStateFlow(false)
-  val isNoCache: StateFlow<Boolean> = _isNoCache
+    private val _isNoCache: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isNoCache: StateFlow<Boolean> = _isNoCache
 
-  private val _onError: MutableStateFlow<Boolean> = MutableStateFlow(false)
-  val onError: StateFlow<Boolean> = _onError
+    private val _onError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val onError: StateFlow<Boolean> = _onError
 
-  private val _characters: MutableStateFlow<List<ViewCharacterItem>> = MutableStateFlow(emptyList())
-  val characters: StateFlow<List<ViewCharacterItem>> = _characters
+    private val _characters: MutableStateFlow<List<ViewCharacterItem>> = MutableStateFlow(emptyList())
+    val characters: StateFlow<List<ViewCharacterItem>> = _characters
 
-  private val _selectedCharacterId: Channel<Int> = Channel()
-  val selectedCharacterId: Flow<Int> = _selectedCharacterId.receiveAsFlow()
+    private val _selectedCharacterId: Channel<Int> = Channel()
+    val selectedCharacterId: Flow<Int> = _selectedCharacterId.receiveAsFlow()
 
-  private val _characterIds: MutableStateFlow<List<Int>> = MutableStateFlow(emptyList())
-  val characterIds: StateFlow<List<Int>> = _characterIds
+    private val _characterIds: MutableStateFlow<List<Int>> = MutableStateFlow(emptyList())
+    val characterIds: StateFlow<List<Int>> = _characterIds
 
-  fun loadCharacters(characterIds: List<Int>) {
-    _loadingState.value = LoadingState.Loading
-    _onError.value = false
-    _isOffline.value = false
-    getCharacters(characterIds)
-  }
-
-  private fun getCharacters(characterIds: List<Int>) {
-    if (!statusProvider.isOnline()) _isOffline.value = true
-
-    viewModelScope.launch {
-      when (val result = repository.getCharactersByIds(characterIds)) {
-        is QueryResult.Successful -> _characters.value = result.data.toViewCharacterItems()
-        QueryResult.NoCache -> _isNoCache.value = true
-        QueryResult.Error -> _onError.value = true
-      }
-      _loadingState.value = LoadingState.None
+    fun loadCharacters(characterIds: List<Int>) {
+        _loadingState.value = LoadingState.Loading
+        _onError.value = false
+        _isOffline.value = false
+        getCharacters(characterIds)
     }
-  }
 
-  private fun List<ModelCharacter>.toViewCharacterItems(): MutableList<ViewCharacterItem> =
-    map { character ->
-      character.toViewCharacterItem(
-        onClick = {
-          _selectedCharacterId.trySend(character.id)
-        },
-      )
-    }.toMutableList()
+    private fun getCharacters(characterIds: List<Int>) {
+        if (!statusProvider.isOnline()) _isOffline.value = true
+
+        viewModelScope.launch {
+            when (val result = repository.getCharactersByIds(characterIds)) {
+                is QueryResult.Successful -> _characters.value = result.data.toViewCharacterItems()
+                QueryResult.NoCache -> _isNoCache.value = true
+                QueryResult.Error -> _onError.value = true
+            }
+            _loadingState.value = LoadingState.None
+        }
+    }
+
+    private fun List<ModelCharacter>.toViewCharacterItems(): MutableList<ViewCharacterItem> =
+        map { character ->
+            character.toViewCharacterItem(
+                onClick = {
+                    _selectedCharacterId.trySend(character.id)
+                },
+            )
+        }.toMutableList()
 }

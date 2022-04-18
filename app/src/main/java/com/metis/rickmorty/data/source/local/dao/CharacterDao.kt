@@ -8,12 +8,12 @@ import com.metis.rickmorty.data.source.local.entity.DbCharacter
 
 @Dao
 interface CharacterDao {
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertCharacter(entityCharacter: DbCharacter)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCharacter(entityCharacter: DbCharacter)
 
-  @Query(value = "SELECT * FROM characters WHERE _id IN (:characterIds)")
-  suspend fun queryCharactersByIds(characterIds: List<Int>): List<DbCharacter>
+    @Query(value = "SELECT * FROM characters WHERE _id IN (:characterIds)")
+    suspend fun queryCharactersByIds(characterIds: List<Int>): List<DbCharacter>
 
-  @Query(value = "SELECT * FROM characters WHERE _id = :characterId LIMIT 1")
-  suspend fun queryCharacter(characterId: Int): DbCharacter?
+    @Query(value = "SELECT * FROM characters WHERE _id = :characterId LIMIT 1")
+    suspend fun queryCharacter(characterId: Int): DbCharacter?
 }

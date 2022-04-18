@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.metis.rickmorty.R
 import com.metis.rickmorty.databinding.CharacterListFragmentBinding
 import com.metis.rickmorty.ui.BaseFragment
 import com.metis.rickmorty.ui.util.launchWhileResumed
@@ -18,56 +16,56 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class CharacterListFragment : BaseFragment() {
 
-  private lateinit var binding: CharacterListFragmentBinding
+    private lateinit var binding: CharacterListFragmentBinding
 
-  private val args: CharacterListFragmentArgs by navArgs()
+    private val args: CharacterListFragmentArgs by navArgs()
 
-  private val viewModel: CharacterListViewModel by viewModels()
+    private val viewModel: CharacterListViewModel by viewModels()
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    binding = CharacterListFragmentBinding.inflate(inflater, container, false)
-    binding.lifecycleOwner = viewLifecycleOwner
-    binding.viewModel = viewModel
-    return binding.root
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    viewModel.loadCharacters(args.characterIds.toList())
-
-    lifecycle.launchWhileResumed {
-      viewModel.onError.collectLatest {
-        if (it) showErrorMessage()
-      }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = CharacterListFragmentBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        return binding.root
     }
 
-    lifecycle.launchWhileResumed {
-      viewModel.isOffline.collectLatest {
-        if (it) showOfflineMessage()
-      }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loadCharacters(args.characterIds.toList())
+
+        lifecycle.launchWhileResumed {
+            viewModel.onError.collectLatest {
+                if (it) showErrorMessage()
+            }
+        }
+
+        lifecycle.launchWhileResumed {
+            viewModel.isOffline.collectLatest {
+                if (it) showOfflineMessage()
+            }
+        }
+
+        lifecycle.launchWhileResumed {
+            viewModel.isNoCache.collectLatest {
+                if (it) onNoOfflineData()
+            }
+        }
+
+        lifecycle.launchWhileResumed {
+            viewModel.selectedCharacterId.collectLatest { characterId ->
+                onCharacterRowClick(characterId)
+            }
+        }
     }
 
-    lifecycle.launchWhileResumed {
-      viewModel.isNoCache.collectLatest {
-        if (it) onNoOfflineData()
-      }
+    private fun onCharacterRowClick(characterId: Int) {
+        val action = CharacterListFragmentDirections
+            .actionCharacterListFragmentToCharacterDetails(characterId)
+        view?.findNavController()?.navigate(action)
     }
-
-    lifecycle.launchWhileResumed {
-      viewModel.selectedCharacterId.collectLatest { characterId ->
-        onCharacterRowClick(characterId)
-      }
-    }
-  }
-
-  private fun onCharacterRowClick(characterId: Int) {
-    val action = CharacterListFragmentDirections
-      .actionCharacterListFragmentToCharacterDetails(characterId)
-    view?.findNavController()?.navigate(action)
-  }
 }

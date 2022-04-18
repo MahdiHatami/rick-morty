@@ -15,40 +15,40 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterDetailsViewModel @Inject constructor(
-  private val repository: Repository,
-  private val statusProvider: StatusProvider
+    private val repository: Repository,
+    private val statusProvider: StatusProvider
 ) : ViewModel() {
 
-  private val _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.None)
-  val loadingState: StateFlow<LoadingState> = _loadingState
+    private val _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.None)
+    val loadingState: StateFlow<LoadingState> = _loadingState
 
-  private val _isOffline: MutableStateFlow<Boolean> = MutableStateFlow(false)
-  val isOffline: StateFlow<Boolean> = _isOffline
+    private val _isOffline: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isOffline: StateFlow<Boolean> = _isOffline
 
-  private val _isNoCache: MutableStateFlow<Boolean> = MutableStateFlow(false)
-  val isNoCache: StateFlow<Boolean> = _isNoCache
+    private val _isNoCache: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isNoCache: StateFlow<Boolean> = _isNoCache
 
-  private val _onError: MutableStateFlow<Boolean> = MutableStateFlow(false)
-  val onError: StateFlow<Boolean> = _onError
+    private val _onError: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val onError: StateFlow<Boolean> = _onError
 
-  private val _character: MutableStateFlow<ViewCharacterDetails?> = MutableStateFlow(null)
-  val character: StateFlow<ViewCharacterDetails?> = _character
+    private val _character: MutableStateFlow<ViewCharacterDetails?> = MutableStateFlow(null)
+    val character: StateFlow<ViewCharacterDetails?> = _character
 
-  fun loadCharacterDetails(characterId: Int) {
-    _loadingState.value = LoadingState.Loading
-    _onError.value = false
-    _isOffline.value = false
-    getCharacterDetails(characterId)
-  }
-
-  private fun getCharacterDetails(characterId: Int) {
-    viewModelScope.launch {
-      when (val result = repository.getCharacterDetails(characterId)) {
-        is QueryResult.Successful -> _character.value = result.data?.toViewCharacterDetails()
-        QueryResult.NoCache -> _isNoCache.value = true
-        QueryResult.Error -> _onError.value = true
-      }
-      _loadingState.value = LoadingState.None
+    fun loadCharacterDetails(characterId: Int) {
+        _loadingState.value = LoadingState.Loading
+        _onError.value = false
+        _isOffline.value = false
+        getCharacterDetails(characterId)
     }
-  }
+
+    private fun getCharacterDetails(characterId: Int) {
+        viewModelScope.launch {
+            when (val result = repository.getCharacterDetails(characterId)) {
+                is QueryResult.Successful -> _character.value = result.data?.toViewCharacterDetails()
+                QueryResult.NoCache -> _isNoCache.value = true
+                QueryResult.Error -> _onError.value = true
+            }
+            _loadingState.value = LoadingState.None
+        }
+    }
 }

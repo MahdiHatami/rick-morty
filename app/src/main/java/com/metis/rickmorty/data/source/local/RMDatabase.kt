@@ -14,6 +14,6 @@ import com.metis.rickmorty.data.source.local.entity.DbEpisode
 @TypeConverters(DbTypeConverters::class)
 abstract class RMDatabase : RoomDatabase() {
 
-  abstract val episodeDao: EpisodeDao
-  abstract val characterDao: CharacterDao
+    abstract val episodeDao: EpisodeDao
+    abstract val characterDao: CharacterDao
 }

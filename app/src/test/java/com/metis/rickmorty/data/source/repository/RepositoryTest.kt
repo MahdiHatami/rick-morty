@@ -15,38 +15,38 @@ import org.junit.Rule
 @OptIn(ExperimentalCoroutinesApi::class)
 open class RepositoryTest {
 
-  @MockK
-  lateinit var database: LocalDataSource
+    @MockK
+    lateinit var database: LocalDataSource
 
-  @MockK
-  lateinit var api: RemoteDataSource
+    @MockK
+    lateinit var api: RemoteDataSource
 
-  @MockK
-  lateinit var internetStatus: StatusProvider
+    @MockK
+    lateinit var internetStatus: StatusProvider
 
-  lateinit var repository: Repository
+    lateinit var repository: Repository
 
-  // Executes tasks in the Architecture Components in the same thread
-  @get:Rule
-  var instantTaskExecutorRule = InstantTaskExecutorRule()
+    // Executes tasks in the Architecture Components in the same thread
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-  // Overrides Dispatchers.Main used in Coroutines
-  @get:Rule
-  var coroutineRule = MainCoroutineRule()
+    // Overrides Dispatchers.Main used in Coroutines
+    @get:Rule
+    var coroutineRule = MainCoroutineRule()
 
-  @Before
-  fun setUp() {
-    MockKAnnotations.init(this)
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
 
-    repository = RepositoryImpl(
-      api = api,
-      db = database,
-      statusProvider = internetStatus,
-      ioDispatcher = coroutineRule.testDispatcher
-    )
-  }
+        repository = RepositoryImpl(
+            api = api,
+            db = database,
+            statusProvider = internetStatus,
+            ioDispatcher = coroutineRule.testDispatcher
+        )
+    }
 
-  fun stubStatusProviderIsOnline(isOnline: Boolean) {
-    every { internetStatus.isOnline() } returns isOnline
-  }
+    fun stubStatusProviderIsOnline(isOnline: Boolean) {
+        every { internetStatus.isOnline() } returns isOnline
+    }
 }

@@ -18,73 +18,73 @@ import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class EpisodeListFragment : BaseFragment() {
 
-  private lateinit var binding: EpisodeListFragmentBinding
+    private lateinit var binding: EpisodeListFragmentBinding
 
-  private val viewModel: EpisodeListViewModel by viewModels()
+    private val viewModel: EpisodeListViewModel by viewModels()
 
-  private var endlessScrollListener: EndlessRecyclerViewScrollListener? = null
+    private var endlessScrollListener: EndlessRecyclerViewScrollListener? = null
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    binding = EpisodeListFragmentBinding.inflate(inflater, container, false)
-    binding.lifecycleOwner = viewLifecycleOwner
-    binding.viewModel = viewModel
-    return binding.root
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    val linearLayoutManager = LinearLayoutManager(context)
-    binding.episodeList.layoutManager = linearLayoutManager
-    endlessScrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
-      override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-        viewModel.loadMoreEpisodes(page = page + 1)
-      }
-    }.also {
-      binding.episodeList.addOnScrollListener(it)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = EpisodeListFragmentBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        return binding.root
     }
 
-    lifecycle.launchWhileResumed {
-      viewModel.onError.collectLatest {
-        if (it) showErrorMessage()
-      }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val linearLayoutManager = LinearLayoutManager(context)
+        binding.episodeList.layoutManager = linearLayoutManager
+        endlessScrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                viewModel.loadMoreEpisodes(page = page + 1)
+            }
+        }.also {
+            binding.episodeList.addOnScrollListener(it)
+        }
+
+        lifecycle.launchWhileResumed {
+            viewModel.onError.collectLatest {
+                if (it) showErrorMessage()
+            }
+        }
+
+        lifecycle.launchWhileResumed {
+            viewModel.isOffline.collectLatest {
+                if (it) showOfflineMessage()
+            }
+        }
+
+        lifecycle.launchWhileResumed {
+            viewModel.isEndOfList.collectLatest {
+                if (it) reachedEndOfList()
+            }
+        }
+
+        lifecycle.launchWhileResumed {
+            viewModel.selectedEpisodeCharacterIds.collectLatest { characterIds ->
+                onEpisodeRowClick(characterIds)
+            }
+        }
     }
 
-    lifecycle.launchWhileResumed {
-      viewModel.isOffline.collectLatest {
-        if (it) showOfflineMessage()
-      }
+    private fun onEpisodeRowClick(characterIds: IntArray) {
+        val action = EpisodeListFragmentDirections
+            .actionEpisodeListFragmentToCharacterListFragment(characterIds)
+        view?.findNavController()?.navigate(action)
     }
 
-    lifecycle.launchWhileResumed {
-      viewModel.isEndOfList.collectLatest {
-        if (it) reachedEndOfList()
-      }
+    private fun reachedEndOfList() {
+        binding.episodeListProgress.visibility = View.GONE
     }
 
-    lifecycle.launchWhileResumed {
-      viewModel.selectedEpisodeCharacterIds.collectLatest { characterIds ->
-        onEpisodeRowClick(characterIds)
-      }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        endlessScrollListener = null
     }
-  }
-
-  private fun onEpisodeRowClick(characterIds: IntArray) {
-    val action = EpisodeListFragmentDirections
-      .actionEpisodeListFragmentToCharacterListFragment(characterIds)
-    view?.findNavController()?.navigate(action)
-  }
-
-  private fun reachedEndOfList() {
-    binding.episodeListProgress.visibility = View.GONE
-  }
-
-  override fun onDestroyView() {
-    super.onDestroyView()
-    endlessScrollListener = null
-  }
 }

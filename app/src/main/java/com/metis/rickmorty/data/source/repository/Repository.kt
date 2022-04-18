@@ -6,7 +6,7 @@ import com.metis.rickmorty.domain.model.PageQueryResult
 import com.metis.rickmorty.domain.model.QueryResult
 
 interface Repository {
-  suspend fun getEpisodes(page: Int): PageQueryResult<List<ModelEpisode>>
-  suspend fun getCharactersByIds(characterIds: List<Int>): QueryResult<List<ModelCharacter>>
-  suspend fun getCharacterDetails(characterId: Int): QueryResult<ModelCharacter?>
+    suspend fun getEpisodes(page: Int): PageQueryResult<List<ModelEpisode>>
+    suspend fun getCharactersByIds(characterIds: List<Int>): QueryResult<List<ModelCharacter>>
+    suspend fun getCharacterDetails(characterId: Int): QueryResult<ModelCharacter?>
 }
