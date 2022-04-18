@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <CurrentIssues>
+    <ID>UnnecessaryAbstractClass:DataSourcesModule.kt$DataSourcesModule</ID>
+    <ID>UnnecessaryAbstractClass:RepositoryModule.kt$RepositoryModule</ID>
+  </CurrentIssues>
+</SmellBaseline>
