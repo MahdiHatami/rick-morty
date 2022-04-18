@@ -91,10 +91,14 @@ class AppModule {
                 val request = requestBuilder.build()
                 return@addInterceptor chain.proceed(request)
             }
-            .readTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
         if (BuildConfig.DEBUG) {
             okHttpClientBuilder.addInterceptor(ChuckInterceptor(context))
         }
         return retrofitBuilder.client(okHttpClientBuilder.build()).build()
+    }
+
+    companion object {
+        const val REQUEST_TIMEOUT = 60L
     }
 }

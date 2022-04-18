@@ -35,16 +35,21 @@ class CharacterDetailsViewModel @Inject constructor(
     val character: StateFlow<ViewCharacterDetails?> = _character
 
     fun loadCharacterDetails(characterId: Int) {
-        _loadingState.value = LoadingState.Loading
-        _onError.value = false
-        _isOffline.value = false
-        getCharacterDetails(characterId)
+        if (statusProvider.isOnline()) {
+            _loadingState.value = LoadingState.Loading
+            _onError.value = false
+            _isOffline.value = false
+            getCharacterDetails(characterId)
+        } else {
+            _isOffline.value = false
+        }
     }
 
     private fun getCharacterDetails(characterId: Int) {
         viewModelScope.launch {
             when (val result = repository.getCharacterDetails(characterId)) {
-                is QueryResult.Successful -> _character.value = result.data?.toViewCharacterDetails()
+                is QueryResult.Successful ->
+                    _character.value = result.data?.toViewCharacterDetails()
                 QueryResult.NoCache -> _isNoCache.value = true
                 QueryResult.Error -> _onError.value = true
             }

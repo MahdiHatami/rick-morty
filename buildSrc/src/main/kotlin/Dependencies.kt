@@ -125,7 +125,7 @@ object Database : Libraries {
 object Navigation : Libraries {
 
   object Versions {
-    const val navigation = "2.3.3"
+    const val navigation = "2.4.0"
   }
 
   const val navigationFragment =
