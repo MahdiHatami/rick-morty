@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 
 object Config {
   const val minSdkVersion = 26
-  const val compileSdkVersion = 30
+  const val compileSdkVersion = 31
   const val targetSdkVersion = 30
   const val versionName = "1.0"
   const val versionCode = 1
