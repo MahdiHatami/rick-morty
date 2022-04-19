@@ -3,10 +3,7 @@ package com.metis.rickmorty.ui.episode
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.metis.rickmorty.MainCoroutineRule
-import com.metis.rickmorty.data.model.ApiEpisodes
-import com.metis.rickmorty.data.model.ApiResult
 import com.metis.rickmorty.data.source.local.LocalDataSource
-import com.metis.rickmorty.data.source.local.entity.DbEpisode
 import com.metis.rickmorty.data.source.remote.RemoteDataSource
 import com.metis.rickmorty.data.source.repository.Repository
 import com.metis.rickmorty.data.source.repository.RepositoryImpl
@@ -19,9 +16,8 @@ import com.metis.rickmorty.factory.EpisodeDataFactory
 import com.metis.rickmorty.getOrAwaitValue
 import com.metis.rickmorty.mapper.toModelCharacter
 import com.metis.rickmorty.utils.StatusProvider
-import io.mockk.every
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -104,7 +100,6 @@ class EpisodeListViewModelTest {
     private fun stubStatusProviderIsOnline(isOnline: Boolean) {
         every { internetStatus.isOnline() } returns isOnline
     }
-
 }
 
 internal class FakeRepository : Repository {
