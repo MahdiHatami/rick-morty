@@ -14,16 +14,14 @@ import com.metis.rickmorty.domain.model.ModelCharacter
 import com.metis.rickmorty.domain.model.ModelEpisode
 import com.metis.rickmorty.domain.model.PageQueryResult
 import com.metis.rickmorty.domain.model.QueryResult
-import com.metis.rickmorty.factory.ApiFactory
 import com.metis.rickmorty.factory.CharacterDataFactory
 import com.metis.rickmorty.factory.EpisodeDataFactory
+import com.metis.rickmorty.getOrAwaitValue
 import com.metis.rickmorty.mapper.toModelCharacter
 import com.metis.rickmorty.utils.StatusProvider
-import io.mockk.coEvery
 import io.mockk.every
-import io.mockk.just
-import io.mockk.runs
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -37,6 +35,13 @@ import org.junit.runner.RunWith
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class EpisodeListViewModelTest {
+    // Executes tasks in the Architecture Components in the same thread
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    // Overrides Dispatchers.Main used in Coroutines
+    @get:Rule
+    var coroutineRule = MainCoroutineRule()
 
     @MockK
     lateinit var database: LocalDataSource
@@ -49,13 +54,7 @@ class EpisodeListViewModelTest {
 
     lateinit var repository: Repository
 
-    // Executes tasks in the Architecture Components in the same thread
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
-
-    // Overrides Dispatchers.Main used in Coroutines
-    @get:Rule
-    var coroutineRule = MainCoroutineRule()
+    lateinit var viewModel: EpisodeListViewModel
 
     @Before
     fun setUp() {
@@ -70,61 +69,42 @@ class EpisodeListViewModelTest {
     }
 
     @Test
-    fun `Test loadData happy path`() = runBlockingTest {
-        // GIVEN
-        stubStatusProviderIsOnline(isOnline = true)
-        stubApiFetchEpisodes(ApiFactory.Episode.makeApiEpisodes())
-        val entityEpisodes = EpisodeDataFactory.makeDbEpisodes(count = 6)
-        stubEpisodeDaoQueryAllEpisodesByPage(entityEpisodes)
-        stubDbInsertEpisode()
+    fun `when loadEpisodes called, livedata value is set`() =
+        coroutineRule.testDispatcher.runBlockingTest {
+            // GIVEN
+            stubStatusProviderIsOnline(isOnline = false)
+            viewModel = EpisodeListViewModel(
+                repository = FakeRepository(),
+                statusProvider = internetStatus
+            )
 
-        val viewModel = EpisodeListViewModel(
-            repository = FakeRepository(),
-            statusProvider = internetStatus
-        )
+            // WHEN
+            viewModel.loadEpisodes()
 
-        // WHEN
-        val episode = viewModel.episodes.value
-
-        // THEN
-        assertThat(episode, equalTo(entityEpisodes))
-    }
+            // THEN
+            assertThat(viewModel.episodes.getOrAwaitValue(), equalTo(viewModel.episodes.value))
+        }
 
     @Test
-    fun `Check if loading more activate the progress`() = runBlockingTest {
-        // GIVEN
-        stubStatusProviderIsOnline(isOnline = false)
-        val viewModel = EpisodeListViewModel(
-            repository = FakeRepository(),
-            statusProvider = internetStatus
-        )
-        // WHEN
-        viewModel.loadMoreEpisodes(page = 1)
+    fun `Check if loading more activate the progress`() =
+        coroutineRule.testDispatcher.runBlockingTest {
+            // GIVEN
+            stubStatusProviderIsOnline(isOnline = false)
+            viewModel = EpisodeListViewModel(
+                repository = FakeRepository(),
+                statusProvider = internetStatus
+            )
+            // WHEN
+            viewModel.loadMoreEpisodes(page = 1)
 
-        // THEN
-        assertThat(viewModel.loadingState.value, equalTo(true))
-    }
+            // THEN
+            assertThat(viewModel.episodes.getOrAwaitValue(), equalTo(viewModel.episodes.value))
+        }
 
     private fun stubStatusProviderIsOnline(isOnline: Boolean) {
         every { internetStatus.isOnline() } returns isOnline
     }
 
-    private fun stubApiFetchEpisodes(episodes: ApiEpisodes) {
-        coEvery { api.fetchEpisodes(page = any()) } returns ApiResult.Success(episodes)
-    }
-
-    private fun stubDbInsertEpisode() {
-        coEvery { database.insertEpisode(any()) } just runs
-    }
-
-    private fun stubEpisodeDaoQueryAllEpisodesByPage(entityEpisodes: List<DbEpisode>) {
-        coEvery {
-            database.queryAllEpisodesByPage(
-                page = any(),
-                pageSize = any()
-            )
-        } returns entityEpisodes
-    }
 }
 
 internal class FakeRepository : Repository {
