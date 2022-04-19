@@ -13,10 +13,6 @@ import com.metis.rickmorty.domain.model.ModelOrigin
 private const val DEAD: String = "dead"
 private const val SEPARATOR: Char = '/'
 
-internal fun extractEpisodeIds(episodes: List<String>): List<Int> {
-    return episodes.map { it.split(SEPARATOR).last().toInt() }
-}
-
 internal fun ApiCharacter.toDbCharacter() =
     DbCharacter(
         id = id,

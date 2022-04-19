@@ -10,8 +10,8 @@ class EpisodeListAdapter : RecyclerView.Adapter<EpisodeViewHolder>() {
     private var episods: MutableList<ViewEpisodeItem> = ArrayList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setEpisodes(episods: List<ViewEpisodeItem>) {
-        this.episods = episods.toMutableList()
+    fun setEpisodes(episodes: List<ViewEpisodeItem>) {
+        this.episods = episodes.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -21,7 +21,7 @@ class EpisodeListAdapter : RecyclerView.Adapter<EpisodeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-        val episode: ViewEpisodeItem = episods.get(position)
+        val episode: ViewEpisodeItem = episods[position]
         holder.setEpisode(episode)
     }
 

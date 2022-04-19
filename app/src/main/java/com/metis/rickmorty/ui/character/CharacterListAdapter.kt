@@ -23,7 +23,7 @@ class CharacterListAdapter : RecyclerView.Adapter<CharacterViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        val character = characters.get(position)
+        val character = characters[position]
         holder.setCharacter(character)
     }
 
