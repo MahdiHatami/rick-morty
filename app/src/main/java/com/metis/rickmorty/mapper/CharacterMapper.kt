@@ -11,7 +11,6 @@ import com.metis.rickmorty.domain.model.ModelLocation
 import com.metis.rickmorty.domain.model.ModelOrigin
 
 private const val DEAD: String = "dead"
-private const val SEPARATOR: Char = '/'
 
 internal fun ApiCharacter.toDbCharacter() =
     DbCharacter(
