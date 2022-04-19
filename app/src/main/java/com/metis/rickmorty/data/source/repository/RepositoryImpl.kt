@@ -22,6 +22,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * Dispatcher: The reason you’d want these Dispatchers
+ * to be injected in a function is to allow overwriting it by a test.
+ */
 class RepositoryImpl @Inject constructor(
     private val api: RemoteDataSource,
     private val db: LocalDataSource,
