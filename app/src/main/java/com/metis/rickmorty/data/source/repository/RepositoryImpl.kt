@@ -1,6 +1,5 @@
 package com.metis.rickmorty.data.source.repository
 
-import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import com.metis.rickmorty.data.model.ApiCharacter
 import com.metis.rickmorty.data.model.ApiEpisode
 import com.metis.rickmorty.data.model.ApiResult
@@ -104,5 +103,9 @@ class RepositoryImpl @Inject constructor(
         if (episodes.isEmpty()) return PageQueryResult.EndOfList
 
         return PageQueryResult.Successful(episodes)
+    }
+
+    companion object {
+        const val PAGE_SIZE: Int = 20
     }
 }

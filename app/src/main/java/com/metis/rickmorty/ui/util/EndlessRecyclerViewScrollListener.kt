@@ -43,6 +43,6 @@ abstract class EndlessRecyclerViewScrollListener(private val layoutManager: Line
     abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView)
 
     companion object {
-        const val DEFAULT_VISIBLE_THRESHOLD = 5
+        const val DEFAULT_VISIBLE_THRESHOLD = 7
     }
 }
