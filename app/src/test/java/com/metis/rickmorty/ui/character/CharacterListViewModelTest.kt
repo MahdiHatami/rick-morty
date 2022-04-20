@@ -1,8 +1,9 @@
-package com.metis.rickmorty.ui.episode
+package com.metis.rickmorty.ui.character
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.metis.rickmorty.MainCoroutineRule
+import com.metis.rickmorty.factory.DataFactory
 import com.metis.rickmorty.factory.FakeRepository
 import com.metis.rickmorty.getOrAwaitValue
 import com.metis.rickmorty.utils.StatusProvider
@@ -20,7 +21,7 @@ import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
-class EpisodeListViewModelTest {
+class CharacterListViewModelTest {
     // Executes tasks in the Architecture Components in the same thread
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -32,7 +33,7 @@ class EpisodeListViewModelTest {
     @MockK
     lateinit var internetStatus: StatusProvider
 
-    private lateinit var viewModel: EpisodeListViewModel
+    private lateinit var viewModel: CharacterListViewModel
 
     @Before
     fun setUp() {
@@ -40,36 +41,42 @@ class EpisodeListViewModelTest {
 
         every { internetStatus.isOnline() } returns true
 
-        viewModel = EpisodeListViewModel(
+        viewModel = CharacterListViewModel(
             repository = FakeRepository(),
             statusProvider = internetStatus
         )
     }
 
     @Test
-    fun `when loadEpisodes called, livedata value is set`() =
+    fun `when loadCharacters call, liveData value is set`() =
         coroutineRule.testDispatcher.runBlockingTest {
             // GIVEN
-            val result = FakeRepository().getViewEpisodes()
+            val ids = DataFactory.randomIntList(6)
+            val result = FakeRepository().getViewCharacters()
 
             // WHEN
-            viewModel.loadEpisodes()
+            viewModel.loadCharacters(ids)
 
             // THEN
-            assertThat(viewModel.episodes.getOrAwaitValue().size, `is`(result.size))
+
+            assertThat(viewModel.characters.getOrAwaitValue().size, `is`(result.size))
         }
 
     @Test
-    fun `when loadEpisodes called, data must match`() =
+    fun `when loadCharacters call, data must be match`() =
         coroutineRule.testDispatcher.runBlockingTest {
             // GIVEN
-            val result = FakeRepository().getViewEpisodes()
+            val ids = DataFactory.randomIntList(6)
+            val result = FakeRepository().getViewCharacters()
 
             // WHEN
-            viewModel.loadEpisodes()
+            viewModel.loadCharacters(ids)
 
             // THEN
-            assertThat(viewModel.episodes.getOrAwaitValue().first().name, `is`(result.first().name))
+
+            assertThat(
+                viewModel.characters.getOrAwaitValue().first().name,
+                `is`(result.first().name)
+            )
         }
 }
-
