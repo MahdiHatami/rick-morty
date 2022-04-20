@@ -45,4 +45,3 @@ internal class FakeRepository : Repository {
         )
     }
 }
-

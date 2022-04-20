@@ -72,4 +72,3 @@ class EpisodeListViewModelTest {
             assertThat(viewModel.episodes.getOrAwaitValue().first().name, `is`(result.first().name))
         }
 }
-
