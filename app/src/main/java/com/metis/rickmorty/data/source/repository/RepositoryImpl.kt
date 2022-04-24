@@ -84,7 +84,10 @@ class RepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             when (val result = api.fetchEpisodes(page)) {
                 is ApiResult.Success -> PageQueryResult.Successful(result.data.results)
-                is ApiResult.Error -> PageQueryResult.Error
+                is ApiResult.Error.ServerError,
+                is ApiResult.Error.UnknownError,
+                is ApiResult.Error
+                -> PageQueryResult.Error
             }
         }
 
