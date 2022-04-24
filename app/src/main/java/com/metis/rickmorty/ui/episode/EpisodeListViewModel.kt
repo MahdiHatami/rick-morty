@@ -1,7 +1,5 @@
 package com.metis.rickmorty.ui.episode
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.metis.rickmorty.data.source.repository.Repository
@@ -39,9 +37,11 @@ class EpisodeListViewModel @Inject constructor(
     private val _onError: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val onError: StateFlow<Boolean> = _onError
 
-    private val _episodes: MutableLiveData<List<ViewEpisodeItem>> = MutableLiveData(emptyList())
-    val episodes: LiveData<List<ViewEpisodeItem>> = _episodes
+    private val _episodes: MutableStateFlow<List<ViewEpisodeItem>> = MutableStateFlow(emptyList())
+    val episodes: StateFlow<List<ViewEpisodeItem>> = _episodes
 
+    // A producer can send values into the channel but, when the channel reaches its N capacity,
+    // the producer suspends until a consumer starts to read data from the same channel
     private val _selectedEpisodeCharacterIds: Channel<IntArray> = Channel()
     val selectedEpisodeCharacterIds: Flow<IntArray> = _selectedEpisodeCharacterIds.receiveAsFlow()
 
@@ -71,7 +71,7 @@ class EpisodeListViewModel @Inject constructor(
                     if (page == 1) {
                         _episodes.value = result.data.toViewEpisodeItems()
                     } else {
-                        _episodes.value = _episodes.value?.plus(result.data.toViewEpisodeItems())
+                        _episodes.value = _episodes.value.plus(result.data.toViewEpisodeItems())
                     }
                 }
                 PageQueryResult.EndOfList -> _isEndOfList.value = true

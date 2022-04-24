@@ -1,7 +1,5 @@
 package com.metis.rickmorty.ui.character
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.metis.rickmorty.data.source.repository.Repository
@@ -37,8 +35,8 @@ class CharacterListViewModel @Inject constructor(
     private val _onError: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val onError: StateFlow<Boolean> = _onError
 
-    private val _characters: MutableLiveData<List<ViewCharacterItem>> = MutableLiveData(emptyList())
-    val characters: LiveData<List<ViewCharacterItem>> = _characters
+    private val _characters: MutableStateFlow<List<ViewCharacterItem>> = MutableStateFlow(emptyList())
+    val characters: StateFlow<List<ViewCharacterItem>> = _characters
 
     private val _selectedCharacterId: Channel<Int> = Channel()
     val selectedCharacterId: Flow<Int> = _selectedCharacterId.receiveAsFlow()
@@ -70,6 +68,8 @@ class CharacterListViewModel @Inject constructor(
         map { character ->
             character.toViewCharacterItem(
                 onClick = {
+                    // When trySend call returns a non-successful result,
+                    // it guarantees that the element was not delivered to the consumer
                     _selectedCharacterId.trySend(character.id)
                 },
             )
