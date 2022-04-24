@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.metis.rickmorty.databinding.EpisodeListFragmentBinding
 import com.metis.rickmorty.ui.BaseFragment
 import com.metis.rickmorty.ui.util.EndlessRecyclerViewScrollListener
@@ -35,13 +34,14 @@ class EpisodeListFragment : BaseFragment() {
         return binding.root
     }
 
+    // make sure that view is fully created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val linearLayoutManager = LinearLayoutManager(context)
         binding.episodeList.layoutManager = linearLayoutManager
         endlessScrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int) {
                 viewModel.loadMoreEpisodes(page = page + 1)
             }
         }.also {
