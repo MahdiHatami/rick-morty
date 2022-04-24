@@ -5,7 +5,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.metis.rickmorty.MainCoroutineRule
 import com.metis.rickmorty.factory.DataFactory
 import com.metis.rickmorty.factory.FakeRepository
-import com.metis.rickmorty.getOrAwaitValue
 import com.metis.rickmorty.utils.StatusProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -59,7 +58,7 @@ class CharacterListViewModelTest {
 
             // THEN
 
-            assertThat(viewModel.characters.getOrAwaitValue().size, `is`(result.size))
+            assertThat(viewModel.characters.value.size, `is`(result.size))
         }
 
     @Test
@@ -75,8 +74,7 @@ class CharacterListViewModelTest {
             // THEN
 
             assertThat(
-                viewModel.characters.getOrAwaitValue().first().name,
-                `is`(result.first().name)
+                viewModel.characters.value.first().name, `is`(result.first().name)
             )
         }
 }

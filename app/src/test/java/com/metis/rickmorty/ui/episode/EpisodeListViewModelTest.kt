@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.metis.rickmorty.MainCoroutineRule
 import com.metis.rickmorty.factory.FakeRepository
-import com.metis.rickmorty.getOrAwaitValue
 import com.metis.rickmorty.utils.StatusProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -56,7 +55,7 @@ class EpisodeListViewModelTest {
             viewModel.loadEpisodes()
 
             // THEN
-            assertThat(viewModel.episodes.getOrAwaitValue().size, `is`(result.size))
+            assertThat(viewModel.episodes.value.size, `is`(result.size))
         }
 
     @Test
@@ -69,6 +68,6 @@ class EpisodeListViewModelTest {
             viewModel.loadEpisodes()
 
             // THEN
-            assertThat(viewModel.episodes.getOrAwaitValue().first().name, `is`(result.first().name))
+            assertThat(viewModel.episodes.value.first().name, `is`(result.first().name))
         }
 }
